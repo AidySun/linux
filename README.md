@@ -92,6 +92,18 @@ tar zxf ..  -C ..
 tar jxf ..  -C ..
 ```
 
+### screen
+An simulator of tab in linux terminal.
+
+```
+screen -ls
+screen -S myscreen
+
+C-a C-a   # quich switch with most recent window
+C-a 0-9
+C-a w     # list all windows
+```
+
 
 
 

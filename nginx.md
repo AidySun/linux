@@ -56,7 +56,7 @@ server {
 # restart nginx - not reload since port change
 ```
 
-* proxy server
+* proxy server with cache
 ```
 upstream local {
 	127.0.0.1:8080; #ip:port configed in each server's nginx.conf
@@ -164,12 +164,38 @@ USR2
 WINCH
 ```
 
+## Wbe tool
+
+* wireshark
 
 
+## epoll, poll, select
 
+* poll & select
+  * where there has ready event, kernel parse all event queue, including unready ones
+* epoll
+  * `rdr` - red-black tree stores all events/connections
+  * `rdllink` - all ready connections/events
 
+* performance
+  * traditional app server 
+    * multiple process/thread, it has interchange between them, it is slow for huge num of connections
+  * nginx
+    * single process, no interchange
+    * javascript, openresty have sync & non-block functions
 
+* Nginx Modules
+  * <img src="img/nginx_modules.png" />
 
+* `worker_connections` config
+  * default is 512
+  * each connections is `ngx_connection_s` (232 bytes) and read/write arrays `ngx_event_s` (96 bytes)
+  * so, each connections is (232 + 96 * 2) bytes on 64bit system
+
+* `ngx_connections.pool`
+  * one connection cound have many request (one connection with multiple read), e.g. keep_alive option
+  * `connection pool` - only allocate once when connection, reuse, it is small (default is `512` bytes)
+  * `request pool` - alloc for every request, defualt is `4k`, because it has more big context content
 
 
 
