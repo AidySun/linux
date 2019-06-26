@@ -93,3 +93,30 @@ Click Win/Mac key, type "input" to select `Input Method Selector`, and select `U
 #export QT_IM_MODULE=ibus
 ```
 
+
+## mirrors update
+
+```
+cd /ect/yum.repos.d
+mv CentOS-Base.repo CentOS-BaseRepo.repo.bak
+# download centos 7 from http://mirrors.163.com/.help/centos.html as CentOS-Base.repo
+yum clean all
+yum makecache
+#yum update
+```
+
+## yum waiting
+
+```shell
+ps -ef
+top
+
+yum remove PackageKit -y
+```
+
+* no C compiler
+```shell
+yum -y install gcc gcc-c++ autoconf automake make 
+
+```
+
