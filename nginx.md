@@ -197,6 +197,58 @@ WINCH
   * `connection pool` - only allocate once when connection, reuse, it is small (default is `512` bytes)
   * `request pool` - alloc for every request, defualt is `4k`, because it has more big context content
 
+* `ngx_cycle_t`
+   ```
+   connections; // 232 bytes on 64bit OS, connection pool, type `ngx_connection_s`
+   read_events; // 96 bytes on 64bit OS, `ngx_event_s`
+   write_events; 
+   * pool;  // `connection_pool_size`
+   ```
+   * `read_events` and `write_events` have the same size with `connections`
+   * `connections` is used for client connections and upstream connections
+     * that means, if `nginx` is used as static resource server, each conn from client would spend two connections
+       * one from client to nginx server, the other one is from nginx server to upstream server
+
+* memory pool
+  * connection memory pool - each connection
+    * `connection_pool_size` - 256/512
+  * request memory pool    - each request in one connection
+    * `request_pool_size` - 4k
+    * request pool size is larger than connection, because connection only need small size, but eace connection may use larger size
+
+### inter-process communication
+
+* basic ways
+  * signal
+  * shared memory
+
+* advanced ways
+  * lock
+  * slab memory management tool
+    * RB-tree, linked list
+    * slot - best fit, good for small size data
+    * `curl http://localhost:80/slab_stat`
+    * `tengine` by taobao
+* `slab_stat` module to allocate the shared memories
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
