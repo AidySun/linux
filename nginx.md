@@ -110,7 +110,7 @@ location {
   1. server hello
     * choosen ciphers
     * random num
-    * session id (re-user or new)
+    * session id (re-use or new)
   1. server cert
   1. server hello
     * done
@@ -164,7 +164,7 @@ USR2
 WINCH
 ```
 
-## Wbe tool
+## Web tool
 
 * wireshark
 
