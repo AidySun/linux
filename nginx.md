@@ -248,6 +248,18 @@ WINCH
 * height - no more than `2*long(n)`
 
 
+### shared object
+
+* nginx executable 
+* module shared object
+  * `dll` , `so`
+  * `nginx.conf`
+  ```
+  load_module modules/ngx_http_image_filter_module.so;
+  localtion / {
+  ...
+      image_filter resize 15 10;  # image resize to 15x10 
+  ```
 
 
 

@@ -115,8 +115,42 @@ A     # set title
 k     # kill
 ```
 
+## User & Group
 
+### User
 
+```
+useradd szh
+id szh
+tail /etc/passwd
+tail /etc/shadow
+passwd szh
+userdel -r szh
+
+usermod -d /home/newhome/ szh
+
+# password life-cycle
+chage 
+```
+
+### Group
+
+```
+groupadd group1
+usermod -g group1 szh
+```
+
+### su, sudo
+
+```
+su - szh  # - means not only user, also the environment. login with user
+```
+
+* sudo
+  * visudo
+  ```
+  user    localhost/ALL=command1, command2    NeedPassword=ALL
+  ```
 
 
 
