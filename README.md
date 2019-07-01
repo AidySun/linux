@@ -98,12 +98,22 @@ An simulator of tab in linux terminal.
 ```
 screen -ls
 screen -S myscreen
-
-C-a C-a   # quich switch with most recent window
-C-a 0-9
-C-a w     # list all windows
+screen -d -r <screen>   # retach
 ```
 
+
+* shortcuts for 'C-a'
+```
+c     # create new windows
+C-a   # quich switch with most recent window
+0-9
+"     # list all selectable screens in current window
+i     # show info of current window 
+d     # detach
+?     # help
+A     # set title
+k     # kill
+```
 
 
 
