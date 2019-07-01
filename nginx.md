@@ -231,8 +231,21 @@ WINCH
     * `tengine` by taobao
 * `slab_stat` module to allocate the shared memories
 
+### ngx hash
 
+* only static hash table, no insert/delete/update
+* alignment - same with CPU cache line (perfer 64 bytes)
+  * bucket_size - each item size
+  * cpu has L1, L2, L3 caches
+* max_size - capacity
 
+### ngx_rbtree
+
+* self-balance binary searching tree
+* O()
+  * insert/delete/update/search - `O(log(n))`
+  * traverse - `O(n)`
+* height - no more than `2*long(n)`
 
 
 
