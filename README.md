@@ -133,12 +133,15 @@ usermod -d /home/newhome/ szh
 chage 
 ```
 
+* file - `/etc/passwd /etc/shadow`
+
 ### Group
 
 ```
 groupadd group1
 usermod -g group1 szh
 ```
+* file  - `/etc/group`
 
 ### su, sudo
 
