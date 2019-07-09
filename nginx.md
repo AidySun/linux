@@ -261,7 +261,21 @@ WINCH
       image_filter resize 15 10;  # image resize to 15x10 
   ```
 
+### Realip module 
 
+Changing client IP
+At **post-read** process.
+
+* realip is not included in nginx by default
+  * `--with-http_realip_module`
+
+* how to get real ip?
+  * HTTP header
+    * `X-Forwarded-For` - all ip path (CDN, proxy)
+    * `X-Real-IP`       - real client IP
+  * nginx
+    * `binary_remote_addr`
+    * `remote_addr`  
 
 
 
