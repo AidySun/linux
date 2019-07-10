@@ -264,7 +264,7 @@ WINCH
 ### Realip module 
 
 Changing client IP
-At **post-read** process.
+At **post-read** phase.
 
 * realip is not included in nginx by default
   * `--with-http_realip_module`
@@ -277,7 +277,40 @@ At **post-read** process.
     * `binary_remote_addr`
     * `remote_addr`  
 
+### return & error_page
 
+occurs in `rewrite` phase.
+
+```
+server {
+  server_name return.test.com;
+  listen 8080;
+  root html/;
+
+  error_page 404 /404.html;         # top priority
+  #return 405;                      # second priority
+  location /{
+    return 404 "nothing found!\n";  # third priority
+  }
+}
+```
+
+### rewrite
+
+* flag
+  * last
+  * break
+  * redirect
+  * permanent
+```
+rewrite_log on;
+error_log logs/rewrite_error.log notice;
+
+location /first {
+  rewrite /first(.*) /second$1 last;
+  return "this is first!\n";
+}
+```
 
 
 
