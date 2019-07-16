@@ -155,10 +155,41 @@ su - szh  # - means not only user, also the environment. login with user
   user    localhost/ALL=command1, command2    NeedPassword=ALL
   ```
 
+### file permission
 
+* does not work for `root` user
+* r = 4, w = 2, x = 1
+* default permission
+  * `666 - \`umask\` ` - e.g. `666 - 022 = 644`
 
+* change group
+  ```
+  chown [user1]:group1 file
+  chgrp group1 file
+  ```
+* `chmod`
+  ```
+  chomd u=rx file
+  ```
 
-
+* SUID (`s`)
+  * set uid, be used to binary file, execute as owner's permission 
+  ```
+  $ ls -l /usr/bin/passwd
+  -rwsr-xr-x.    1    root    root /usr/bin/passwd
+  ```
+  * each user could change own password
+* SGID
+  * used to directory
+  * for the files/folders new created under the folder, permission is set to current dir's groups permission
+  * use case: shared folder
+* SBIT (`t`)
+  * used to directory
+  * for the files/folders created under the folder, only myself and root could remove it
+  ```
+  $ ls -ld /tmp
+  -rwxrwxrwt  root  root /tmp
+  ```
 
 
 
