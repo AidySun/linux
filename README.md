@@ -191,6 +191,18 @@ su - szh  # - means not only user, also the environment. login with user
   -rwxrwxrwt  root  root /tmp
   ```
 
+## Network Configuration
+
+### net-tools
+* old way 
+1. ifconfig
+1. route
+1. netstat
+
+### iproute2
+* new way 
+1. ip
+1. ss
 
 
 
