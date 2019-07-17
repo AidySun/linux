@@ -204,7 +204,55 @@ su - szh  # - means not only user, also the environment. login with user
 1. ip
 1. ss
 
+### network config
 
+```
+```
+
+### ifconfig
+
+* eth0
+* linux? may have diff names
+  * eno1
+  * ens
+  * enp0s3
+  * centos7
+
+* switch network card to be * *
+
+* change to `eth0` for network card
+  ```
+  vi /etc/default/grub
+  # set value of `GRUB_CMDLINE_LINUX`  to be 
+  # biosdevname=0   net.ifnames=0
+
+  grub2-mkconfig -o /boot/grub2/grub.cfg
+
+  ```
+
+* change IP
+```
+ifconfig eth0 192.168.1.22  netmast 255.255.255.0   # change ip [netmask]
+ifdown eht0
+ifup   eth0
+```
+
+### mii-tool
+
+
+### route
+
+```
+route -n
+
+route del default gw 10.0.0.99 
+route add default gw 10.0.0.1 
+
+route add default 10.0.0.1    netmask 255.255.255.0 gw 10.21.1.1 
+
+route add -host 10.0.0.1    gw 10.21.1.1 
+route add -net  192.168.0.0 gw 10.21.1.2
+```
 
 
 
