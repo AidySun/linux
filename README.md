@@ -275,9 +275,8 @@ route add -host 10.0.0.1    gw 10.21.1.1
 route add -net  192.168.0.0 gw 10.21.1.2
 ```
 
-
-
 ### iproute2
+
 1. ip
 1. ss
 

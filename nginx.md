@@ -302,6 +302,25 @@ At **post-read** phase.
     * `binary_remote_addr`
     * `remote_addr`  
 
+```
+server {
+  server_name realip.test.com;
+  set_real_ip_from 127.0.2.3;
+  real_ip_recursive on; # ignore recursive ip
+  real_ip_header X-Forward-For;
+
+  location / {
+    return 200 "real client ip: $remote_addr\n";
+  }
+}
+```
+* test
+
+```
+curl -H "X-Forward-For: 1.1.1.1,127.0.2.3" my.web.com
+1.1.1.1    # if real_ip_recurisve off, it would be 127.0.2.3
+```
+
 ### return & error_page
 
 occurs in `rewrite` phase.
