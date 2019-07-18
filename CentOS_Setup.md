@@ -1,3 +1,17 @@
+<!-- MarkdownTOC -->
+
+- [CentOS Setup](#centos-setup)
+  - [Installation](#installation)
+  - [Connect to Ethernet](#connect-to-ethernet)
+  - [Connect WiFi](#connect-wifi)
+  - [Install GNOME](#install-gnome)
+  - [Pinyin Input](#pinyin-input)
+  - [mirrors update](#mirrors-update)
+  - [yum waiting](#yum-waiting)
+
+<!-- /MarkdownTOC -->
+
+
 # CentOS Setup
 
 ## Installation

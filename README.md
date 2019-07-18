@@ -1,3 +1,32 @@
+
+
+<!-- MarkdownTOC autolink=true levels="1,2,3,4,5" -->
+
+- [linux](#linux)
+    - [check OS release version](#check-os-release-version)
+    - [vim color scheme](#vim-color-scheme)
+    - [crontab - scheduled task](#crontab---scheduled-task)
+  - [Commands](#commands)
+    - [`help`, `man`, `info`](#help-man-info)
+      - [man](#man)
+      - [help](#help)
+      - [info](#info)
+    - [screen](#screen)
+  - [User & Group](#user--group)
+    - [User](#user)
+    - [Group](#group)
+    - [su, sudo](#su-sudo)
+    - [file permission](#file-permission)
+  - [Network Configuration](#network-configuration)
+    - [net-tools](#net-tools)
+      - [ifconfig](#ifconfig)
+      - [mii-tool](#mii-tool)
+      - [route](#route)
+    - [iproute2](#iproute2)
+
+<!-- /MarkdownTOC -->
+
+
 # linux
 
 ### check OS release version
@@ -193,23 +222,15 @@ su - szh  # - means not only user, also the environment. login with user
 
 ## Network Configuration
 
+1. net-tools - old way 
+2. iproute2  - new way 
+
 ### net-tools
-* old way 
 1. ifconfig
 1. route
 1. netstat
 
-### iproute2
-* new way 
-1. ip
-1. ss
-
-### network config
-
-```
-```
-
-### ifconfig
+#### ifconfig
 
 * eth0
 * linux? may have diff names
@@ -237,10 +258,10 @@ ifdown eht0
 ifup   eth0
 ```
 
-### mii-tool
+#### mii-tool
 
 
-### route
+#### route
 
 ```
 route -n
@@ -255,6 +276,10 @@ route add -net  192.168.0.0 gw 10.21.1.2
 ```
 
 
+
+### iproute2
+1. ip
+1. ss
 
 
 
