@@ -18,7 +18,9 @@
     - [shared object](#shared-object)
     - [Realip module](#realip-module)
     - [return & error_page](#return--error_page)
-    - [rewrite](#rewrite)
+    - [`rewrite` cmd, not phase](#rewrite-cmd-not-phase)
+    - [`return`](#return)
+    - [`error_page  `](#error_page-)
 
 <!-- /MarkdownTOC -->
 
@@ -339,10 +341,10 @@ server {
 }
 ```
 
-### rewrite
+### `rewrite` cmd, not phase
 
 * flag
-  * last
+  * last - continue
   * break
   * redirect
   * permanent
@@ -356,8 +358,21 @@ location /first {
 }
 ```
 
+### `return` 
+  * `rewrite` phase, generally used to redirect or simple return
+  * 444 - nginx defined, close connection
+  * HTTP/1.0
+    * 301 - permanent, 302 - temp
+  * HTTP/1.1
+    * 303, 307, 308
 
-
+### `error_page <code> <uri>`
+  * **it does NOT belong to any HTTP phase**
+  * `error_page 404 /404.html`
+  * together with `return`
+    * they are `operation` syntax, so
+    * no merge when they appear in diff area 
+      * (e.g. under `server` and `location`)
 
 
 
