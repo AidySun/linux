@@ -23,6 +23,15 @@
       - [mii-tool](#mii-tool)
       - [route](#route)
     - [iproute2](#iproute2)
+  - [network trouble shooting](#network-trouble-shooting)
+    - [ping](#ping)
+    - [traceroute](#traceroute)
+    - [mtr        - my traceroute, analysis data package](#mtr---my-traceroute-analysis-data-package)
+    - [nslookup   - domain](#nslookup---domain)
+    - [telnet     - host can access, but not service, check port](#telnet---host-can-access-but-not-service-check-port)
+    - [tcpdump    -](#tcpdump--)
+    - [netstat    - service listen range](#netstat---service-listen-range)
+    - [ss](#ss)
 
 <!-- /MarkdownTOC -->
 
@@ -279,6 +288,29 @@ route add -net  192.168.0.0 gw 10.21.1.2
 
 1. ip
 1. ss
+
+
+## network trouble shooting
+
+### ping
+### traceroute
+```
+traceroute -w 1 www.baidu.com  # max wait 1 second
+```
+### mtr        - my traceroute, analysis data package
+### nslookup   - domain 
+* get ip from domain
+* `dig`
+
+### telnet     - host can access, but not service, check port
+### tcpdump    - 
+### netstat    - service listen range
+### ss
+
+
+
+
+
 
 
 
