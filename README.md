@@ -29,9 +29,10 @@
     - [mtr        - my traceroute, analysis data package](#mtr---my-traceroute-analysis-data-package)
     - [nslookup   - domain](#nslookup---domain)
     - [telnet     - host can access, but not service, check port](#telnet---host-can-access-but-not-service-check-port)
-    - [tcpdump    -](#tcpdump--)
-    - [netstat    - service listen range](#netstat---service-listen-range)
+    - [tcpdump    -  all tcp packages](#tcpdump---all-tcp-packages)
+    - [netstat    - service listen](#netstat---service-listen)
     - [ss](#ss)
+  - [Network Service Management](#network-service-management)
 
 <!-- /MarkdownTOC -->
 
@@ -303,9 +304,86 @@ traceroute -w 1 www.baidu.com  # max wait 1 second
 * `dig`
 
 ### telnet     - host can access, but not service, check port
-### tcpdump    - 
-### netstat    - service listen range
+```
+telnet www.baidu.com 80
+```
+
+### tcpdump    -  all tcp packages
+```
+tcpdump -i any -n port 80 [-w dump.log]
+tcpdump -i any -n host 10.1.1.2 [and port 80]
+
+```
+* `-n` show ip instead of domain
+
+### netstat    - service listen 
+```
+netstat -ntpl 
+```
+* `-n` show ip
+* `-t` tcp
+* `-p` process
+* `-l` listen state services
+
 ### ss
+
+
+## Network Service Management
+Previous setting would be lost after OS/service restart.
+
+* configuration files
+  * ifcfg-eth0
+  * etc/hosts
+* show network status
+  ```
+  service network status
+  service network restart # reset previous settings
+  ```
+
+To persistent the configuration:
+1. sysV
+2. systemd/systemctl
+
+* `network` v.s. `NetworkManager` 
+  * should use either `network` or `NetworkManager` (which is new in CentOS 7), not both
+  * `network` is preferred in server management
+  * turn `network`
+    ```
+    chkconfig --level 234 netowrk off
+    chkconfig --list network
+    ```
+  * check `NetworkManager`
+    ```
+    systemctl list-unit-files NetworkManager.service
+    systemctl disable NetworkManager
+    ```
+* `/etc/sysconfig/network-scripts/ifcfg-eth0`
+  * `BOOTPROTO=dhcp`
+    * `none` - static ip address
+      * IPADDR, NETMASK, GATEWAY, DNS1, DNS2, DNS3
+  * `DEVICE="eth0"`
+  * `ONBOOT="yes"`
+    * if it no, use `ifup` to start the network card
+  * reload the config
+    ```
+    service network restart
+    systemctl restart NetworkManager.service
+    ```
+  * check settings after reload
+    * ifconfig eth0 (ip, netmask), route -n (gateway), nslookup (dsn)
+
+* `hostname`
+  ```
+  hostname centos7.tempname
+  hostnamectl set-hostname centos7.permanentname
+  ```
+  * **NOTE:** change `/etc/hosts` after hostname changes -  `127.0.0.1 centos7.newname`
+
+
+
+
+
+
 
 
 
