@@ -80,6 +80,7 @@ crontab -e
 
 * sections of man `man 7 man`
   1. commands - can execute in shell
+    * man ls # equals to man 1 ls
   2. system calls - called by kernel
   3. library calls - most of `libc` functions
   4. special files - files under `/dev`
@@ -92,12 +93,6 @@ crontab -e
 * all sections 
 ` man -a passwd`
 
-* 
-```
-man ls # equals to man 1 ls
-1 sys
-2 
-```
 
 #### help
 

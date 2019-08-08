@@ -1,13 +1,13 @@
 <!-- MarkdownTOC -->
 
-- [CentOS Setup](#centos-setup)
-  - [Installation](#installation)
-  - [Connect to Ethernet](#connect-to-ethernet)
-  - [Connect WiFi](#connect-wifi)
-  - [Install GNOME](#install-gnome)
-  - [Pinyin Input](#pinyin-input)
-  - [mirrors update](#mirrors-update)
-  - [yum waiting](#yum-waiting)
+- CentOS Setup
+  - Installation
+  - Connect to Ethernet
+  - Connect WiFi
+  - Install GNOME
+  - Pinyin Input
+  - mirrors update
+  - yum waiting
 
 <!-- /MarkdownTOC -->
 
@@ -15,7 +15,7 @@
 # CentOS Setup
 
 ## Installation
-Down the CentOS 7 ISO file, create bootable USB with following command
+Download the CentOS 7 ISO file, create bootable USB with following command
 ```shell
 dd if=CentOS_XXXX.iso of=/dev/sdb
 ```
