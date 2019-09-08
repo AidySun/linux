@@ -382,6 +382,52 @@ location /first {
 
 
 
+## block / non-block , sync / async
+
+* block
+  * kernel c functions
+  * `accept`  
+
+* non-block
+  * error returned immediatelly if not ready
+
+* async
+  * callback / hook 
+  * diff process/thread?
+
+* nginx is sync non-blocking
+
+
+## nginx modules
+
+* compiled into nginx binary
+* `obj/nginx_modules.c` shows all modules compiled into nginx (after `./configure`)
+* `src/http/modules`
+  ```
+  ngx_command_t // all commands
+  ```
+* `ngx_module_t`
+  * `ngx_core_module_t`
+  * `ngx_http_module_t`
+  * `ngx_event_module_t`
+  * `ngx_mail_conf_ctx_t`
+  * `ngx_conf_module_t`
+  * `ngx_stream_module_t`
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
