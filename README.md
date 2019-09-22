@@ -33,6 +33,13 @@
     - [netstat    - service listen](#netstat---service-listen)
     - [ss](#ss)
   - [Network Service Management](#network-service-management)
+  - [Liberay Management](#liberay-management)
+    - [rpm](#rpm)
+    - [deb](#deb)
+  - [Package Management](#package-management)
+    - [yum](#yum)
+    - [apt](#apt)
+  - [Kernel](#kernel)
 
 <!-- /MarkdownTOC -->
 
@@ -252,19 +259,22 @@ su - szh  # - means not only user, also the environment. login with user
   # set value of `GRUB_CMDLINE_LINUX`  to be 
   # biosdevname=0   net.ifnames=0
 
+  # refresh grup
   grub2-mkconfig -o /boot/grub2/grub.cfg
 
   ```
-
 * change IP
 ```
 ifconfig eth0 192.168.1.22  netmast 255.255.255.0   # change ip [netmask]
-ifdown eht0
-ifup   eth0
+
+# reset ifconfig
+ifdown eht0  
+ifup   eth0  # ifconfig eth0 up
 ```
 
 #### mii-tool
 
+Check wired connection?
 
 #### route
 
@@ -344,8 +354,8 @@ To persistent the configuration:
   * `network` is preferred in server management
   * turn `network`
     ```
-    chkconfig --level 234 netowrk off
     chkconfig --list network
+    chkconfig --level 234 netowrk off
     ```
   * check `NetworkManager`
     ```
@@ -374,9 +384,42 @@ To persistent the configuration:
   ```
   * **NOTE:** change `/etc/hosts` after hostname changes -  `127.0.0.1 centos7.newname`
 
+## Liberay Management
+
+### rpm
+
+### deb
+
+## Package Management
+
+### yum
+
+* epel is an extendent yum repo
+
+```
+yum install epel-release -y    
+
+ls /etc/yum.repos.d/CentOS-Base.repo
+wget -O /etc/yum/repos.d/CentOS-Base.repo http://mirrors.aliun.com/repo/Centos-7.repo
+yum makecache
+```
+
+### apt
 
 
+## Kernel
 
+* yum 
+  * `yum install kernel [3.10.0]`
+  * or `yum update`
+* rpm / source compile
+  ```
+  make menuconfig
+  lscpu # check cpu
+  make -j2 all
+  make modules_install
+  make install
+  ```
 
 
 
