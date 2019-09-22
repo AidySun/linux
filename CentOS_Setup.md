@@ -8,6 +8,8 @@
   - Pinyin Input
   - mirrors update
   - yum waiting
+  - grub
+    - reset root password
 
 <!-- /MarkdownTOC -->
 
@@ -133,4 +135,66 @@ yum remove PackageKit -y
 yum -y install gcc gcc-c++ autoconf automake make 
 
 ```
+
+## grub 
+* change kernel boot config
+
+* change boot order
+```
+grep ^menu /boot/grub2/grub.cfg
+grub2-set-default 0 # order
+grub2-editenv list
+```
+* /etc/default/grub
+```
+GRUB_CMDLINE_LINUX="xxxxx rhgb quiet biosdevname=0 net.ifnames=0"
+rhgb - GUI
+quiet - less info
+```
+
+### reset root password
+
+* `e` to edit
+* `linux16 /vm...`
+  * CentOS6 - `single`
+  * CentOS7 - `rd.break`
+* Ctrl-x to start
+* then
+```
+# current home is logic home, /sysroot is the real home on disk 
+mouont -o remount,rw /sysroot
+chroot /sysroot
+echo 123456 | passwd --stdin root
+```
+* SELinux
+  * vi /etc/selinux/config
+  ```
+  SELINUX=disabled
+  ```
+```
+exit
+reboot
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

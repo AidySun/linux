@@ -12,6 +12,7 @@
       - [help](#help)
       - [info](#info)
     - [screen](#screen)
+    - [ps pstree top](#ps-pstree-top)
   - [User & Group](#user--group)
     - [User](#user)
     - [Group](#group)
@@ -155,6 +156,17 @@ d     # detach
 A     # set title
 k     # kill
 ```
+
+### ps pstree top
+```
+ps -ef
+ps -eLf           # L - LWP (light weight process) thread
+ps -aux
+```
+* top
+  * load avg: 1min 5min 15min
+  * `s` - set refresh second
+  * `o` - set order
 
 ## User & Group
 
@@ -420,6 +432,24 @@ yum makecache
   make modules_install
   make install
   ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
