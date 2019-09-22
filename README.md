@@ -13,6 +13,9 @@
       - [info](#info)
     - [screen](#screen)
     - [ps pstree top](#ps-pstree-top)
+    - [nice renice job](#nice-renice-job)
+    - [kill](#kill)
+    - [nohup deamon](#nohup-deamon)
   - [User & Group](#user--group)
     - [User](#user)
     - [Group](#group)
@@ -168,6 +171,39 @@ ps -aux
   * `s` - set refresh second
   * `o` - set order
 
+### nice renice job
+
+* nice range -20 to 19, the lower the high priority
+* `echo $$` - current pid
+* nice -n 10 ./a.sh
+* renice -n 10 <pid>
+* ./a.sh &
+* jobs
+* fg <index>
+* ctrl + z # stop/hang a front ground process 
+* jobs
+* bg/fg <index> # rerun stopped process
+
+### kill
+
+* ctrl+c = 2)SIGINT
+```
+kill -9 <pid>
+```
+
+### nohup deamon
+
+* nohup - process won't exit if its terminal is closed
+```
+nohup cmd & # output to nohub.out
+```
+
+* deamon
+  * same process as nohub, when terminal is closed, process's parent is changed to be 1
+  * deamon process's directory is changed to be `/`
+
+* `/proc/<pid>`
+ 
 ## User & Group
 
 ### User
