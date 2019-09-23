@@ -13,6 +13,8 @@
     - [nice renice job](#nice-renice-job)
     - [kill](#kill)
     - [nohup deamon](#nohup-deamon)
+    - [systemctl / service](#systemctl--service)
+  - [logs /var/log](#logs-varlog)
   - [User & Group](#user--group)
     - [User](#user)
     - [Group](#group)
@@ -38,6 +40,9 @@
     - [yum](#yum)
     - [apt](#apt)
   - [Kernel](#kernel)
+  - [memory / disk](#memory--disk)
+  - [SELinux](#selinux)
+  - [File System](#file-system)
 
 <!-- /MarkdownTOC -->
 
@@ -196,7 +201,39 @@ nohup cmd & # output to nohub.out
   * same process as nohub, when terminal is closed, process's parent is changed to be 1
   * deamon process's directory is changed to be `/`
 
-* `/proc/<pid>`
+* `ls /proc/<pid>`
+
+
+### systemctl / service
+
+* service management tool
+* service and target are located under `/usr/lib/systemd/system`
+  * `vi sshd.service`
+  * `systemctl get-default`
+* `service` - CentOS 6
+  * `/etc/init.d`
+* `systemctl` - CentOS 7
+  * `/usr/lib/systemd/system`
+  * `systemctl status|start|stop|restart|enable|disbale <service>`  # e.g. sshd.service, network.service
+    * `enable` - start on login
+
+* `chkconfig --list`
+* init
+  ```
+  init 0 # poweroff
+  init 3 # multi user mode in console, 2 without network
+  init 6 # reboot
+  ```
+
+
+## logs /var/log
+
+* messages
+* dmesg
+* secure
+* cron
+
+
  
 ## User & Group
 
@@ -457,9 +494,45 @@ yum makecache
   make install
   ```
 
+## memory / disk
 
+* `free`
+  * `-m g`
 
+* `fdisk`
+* `parted`
+* `df`
+* `du` - real size  - size of datablocks
+* `ls` - logic size - size in inode
+   ```
+   dd if=/dev/zero bs=4M count=10 of=afile
+   ls -lh afile # 40M
+   du -h  afile  # 40M
+   dd if=/dev/zero bs=4M count=10 seek=20 of=bfile  # file with 'hole'
+   ls -lh bfile # 120M
+   du -h  bfile # 40M
+   ```
 
+## SELinux
+
+```
+getenforce
+vi /etc/selinux/config
+ps -Z
+id -Z
+ls -Z
+```
+
+## File System
+
+* ext4
+  * super block
+  * inode
+  * datablock
+  * `ln -s src dest`
+  * `facl, getfacl, setfacl`
+* xfx
+* NTFS
 
 
 
