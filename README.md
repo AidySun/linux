@@ -1,6 +1,6 @@
 
 
-<!-- MarkdownTOC autolink=true levels="1,2,3,4,5" -->
+<!-- MarkdownTOC autolink=true levels="1,2,3" -->
 
 - [linux](#linux)
     - [check OS release version](#check-os-release-version)
@@ -8,9 +8,6 @@
     - [crontab - scheduled task](#crontab---scheduled-task)
   - [Commands](#commands)
     - [`help`, `man`, `info`](#help-man-info)
-      - [man](#man)
-      - [help](#help)
-      - [info](#info)
     - [screen](#screen)
     - [ps pstree top](#ps-pstree-top)
     - [nice renice job](#nice-renice-job)
@@ -23,9 +20,6 @@
     - [file permission](#file-permission)
   - [Network Configuration](#network-configuration)
     - [net-tools](#net-tools)
-      - [ifconfig](#ifconfig)
-      - [mii-tool](#mii-tool)
-      - [route](#route)
     - [iproute2](#iproute2)
   - [network trouble shooting](#network-trouble-shooting)
     - [ping](#ping)
@@ -116,8 +110,8 @@ crontab -e
 
 
 #### info
-it has more detail info than `help`.
 
+* it has more detail info than `help`.
 
 * cp
 ```
@@ -129,24 +123,24 @@ cp -p
 
 * tar, gzip, bzip2
 ```
-tar cf new.tar sourceDir
-tar czf new.tar.gz sourceDir  # zip with gzip  .tgz
-tar cjf new.tar.bz2 sourceDir # zip with bzip2	.tbz2
-tar xf ..  -C ..
-tar zxf ..  -C ..
-tar jxf ..  -C ..
+tar cf  new.tar     sourceDir
+tar czf new.tar.gz  sourceDir   # zip with gzip.tgz
+tar cjf new.tar.bz2 sourceDir   # zip with bzip2.tbz2
+tar xf  .. -C ..
+tar zxf .. -C ..
+tar jxf .. -C ..
 ```
+  * `z` - gz, tgz; `j` - bz2, tbz2
 
 ### screen
-An simulator of tab in linux terminal.
+
+* An simulator of tab in linux terminal.
 
 ```
 screen -ls
 screen -S myscreen
 screen -d -r <screen>   # retach
 ```
-
-
 * shortcuts for 'C-a'
 ```
 c     # create new windows
@@ -294,12 +288,7 @@ su - szh  # - means not only user, also the environment. login with user
 
 * eth0
 * linux? may have diff names
-  * eno1
-  * ens
-  * enp0s3
-  * centos7
-
-* switch network card to be * *
+  * eno1, ens, enp0s3(centos7)
 
 * change to `eth0` for network card
   ```
@@ -313,7 +302,7 @@ su - szh  # - means not only user, also the environment. login with user
   ```
 * change IP
 ```
-ifconfig eth0 192.168.1.22  netmast 255.255.255.0   # change ip [netmask]
+ifconfig eth0 192.168.1.22  netmask 255.255.255.0   # change ip [netmask]
 
 # reset ifconfig
 ifdown eht0  
@@ -442,8 +431,7 @@ To persistent the configuration:
 
 ### yum
 
-* epel is an extendent yum repo
-
+* epel is an extended yum repo
 ```
 yum install epel-release -y    
 
