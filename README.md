@@ -81,6 +81,7 @@ crontab -l
 crontab -e 
 ```
 
+[An example of setting up a process monitor and alert on a local system](https://www.redhat.com/sysadmin/linux-monitoring-and-alerting)
 
 ## Commands
 
