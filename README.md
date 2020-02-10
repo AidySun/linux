@@ -465,6 +465,14 @@ To persistent the configuration:
 
 ### deb
 
+* `.deb` on Ubuntu
+
+```
+sudo dpkg -l t.deb # list
+sudo dpkg -i t.deb # install
+sudo dpkg -r t     # remove installed lib
+```
+
 ## Package Management
 
 ### yum
