@@ -3,46 +3,50 @@
 <!-- MarkdownTOC autolink=true levels="1,2,3" -->
 
 - [linux](#linux)
-    - [check OS release version](#check-os-release-version)
-    - [vim color scheme](#vim-color-scheme)
-    - [crontab - scheduled task](#crontab---scheduled-task)
-  - [Commands](#commands)
-    - [`help`, `man`, `info`](#help-man-info)
-    - [screen](#screen)
-    - [ps pstree top](#ps-pstree-top)
-    - [nice renice job](#nice-renice-job)
-    - [kill](#kill)
-    - [nohup deamon](#nohup-deamon)
-    - [systemctl / service](#systemctl--service)
-  - [logs /var/log](#logs-varlog)
-  - [User & Group](#user--group)
-    - [User](#user)
-    - [Group](#group)
-    - [su, sudo](#su-sudo)
-    - [file permission](#file-permission)
-  - [Network Configuration](#network-configuration)
-    - [net-tools](#net-tools)
-    - [iproute2](#iproute2)
-  - [network trouble shooting](#network-trouble-shooting)
-    - [ping](#ping)
-    - [traceroute](#traceroute)
-    - [mtr        - my traceroute, analysis data package](#mtr---my-traceroute-analysis-data-package)
-    - [nslookup   - domain](#nslookup---domain)
-    - [telnet     - host can access, but not service, check port](#telnet---host-can-access-but-not-service-check-port)
-    - [tcpdump    -  all tcp packages](#tcpdump---all-tcp-packages)
-    - [netstat    - service listen](#netstat---service-listen)
-    - [ss](#ss)
-  - [Network Service Management](#network-service-management)
-  - [Liberay Management](#liberay-management)
-    - [rpm](#rpm)
-    - [deb](#deb)
-  - [Package Management](#package-management)
-    - [yum](#yum)
-    - [apt](#apt)
-  - [Kernel](#kernel)
-  - [memory / disk](#memory--disk)
-  - [SELinux](#selinux)
-  - [File System](#file-system)
+		- [check OS release version](#check-os-release-version)
+		- [vim color scheme](#vim-color-scheme)
+		- [crontab - scheduled task](#crontab---scheduled-task)
+	- [Commands](#commands)
+		- [`help`, `man`, `info`](#help-man-info)
+		- [screen](#screen)
+		- [ps pstree top](#ps-pstree-top)
+		- [nice renice job](#nice-renice-job)
+		- [kill](#kill)
+		- [nohup deamon](#nohup-deamon)
+		- [systemctl / service](#systemctl--service)
+	- [logs /var/log](#logs-varlog)
+	- [User & Group](#user--group)
+		- [User](#user)
+		- [Group](#group)
+		- [su, sudo](#su-sudo)
+		- [file permission](#file-permission)
+	- [Network Configuration](#network-configuration)
+		- [net-tools](#net-tools)
+		- [iproute2](#iproute2)
+	- [network trouble shooting](#network-trouble-shooting)
+		- [ping](#ping)
+		- [traceroute](#traceroute)
+		- [mtr        - my traceroute, analysis data package](#mtr---my-traceroute-analysis-data-package)
+		- [nslookup   - domain](#nslookup---domain)
+		- [telnet     - host can access, but not service, check port](#telnet---host-can-access-but-not-service-check-port)
+		- [tcpdump    -  all tcp packages](#tcpdump---all-tcp-packages)
+		- [netstat    - service listen](#netstat---service-listen)
+		- [ss](#ss)
+	- [Network Service Management](#network-service-management)
+	- [Liberay Management](#liberay-management)
+		- [rpm](#rpm)
+		- [deb](#deb)
+	- [Package Management](#package-management)
+		- [yum](#yum)
+		- [apt](#apt)
+	- [Kernel](#kernel)
+	- [memory / disk](#memory--disk)
+	- [SELinux](#selinux)
+	- [File System](#file-system)
+	- [System info](#system-info)
+	- [Linux Startup](#linux-startup)
+- [Shell](#shell)
+	- [Shell script execution](#shell-script-execution)
 
 <!-- /MarkdownTOC -->
 
@@ -543,8 +547,41 @@ ls -Z
 * xfx
 * NTFS
 
+* `/ect/fstab` stores the mount devices to folders
+* `free -m` show memory info
 
+* `mdadm` software RAID
 
+## System info
+
+* `sar` system info
+  - -u, -r, -d, -q 
+
+* `iftop -P` show network status
+
+## Linux Startup
+
+* BIOS - MBR - BootLoader(grub) - kernel - systemd - SystemInit - shell
+* `hexdump -C mbr.bin`
+  -  end of 512 bytes is `55 aa` means the device is bootable
+
+# Shell
+
+* *Sha-Bang* : `#!/bin/bash`
+
+## Shell script execution
+
+```
+# child bash process will be created to execute the script, `cd /tmp` won't affect executing pwd
+bash ./f.sh
+./f.sh
+
+# executed under current process, `cd /tmp` will change current pwd
+shource ./f.sh
+. f.sh
+```
+
+* build-in commands won't create child shell process, e.g. `ls cd`.
 
 
 
