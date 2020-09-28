@@ -47,6 +47,10 @@
 	- [Linux Startup](#linux-startup)
 - [Shell](#shell)
 	- [Shell script execution](#shell-script-execution)
+	- [Redirection](#redirection)
+	- [Variable](#variable)
+		- [System variable](#system-variable)
+	- [Shell Syntax](#shell-syntax)
 
 <!-- /MarkdownTOC -->
 
@@ -583,6 +587,197 @@ shource ./f.sh
 
 * build-in commands won't create child shell process, e.g. `ls cd`.
 
+
+## Redirection
+
+* `2>` error
+* `&>` all output
+
+* input & output direction together
+```
+cat > email.txt << EOF
+Hello A,
+This is B. Nice to meet you.
+EOF
+```
+
+## Variable
+
+- varName=valud, `a=123`, no space around `=`
+- let, `let a=10+20`, *calculation in shell is slow*
+- expression result, `letc=$(ls -l .)`, or `letc=\`ls -l .\``
+
+
+- variable scope: only current bash
+  - `unset` to unset a variable
+  - `export` extend the scope to child-shell
+
+### System variable
+
+- `env` - show system variable
+  - capitalized variables are the default variables
+- predefined variable
+  - `$?` - last cmd return code
+  - `$$` - current process pid
+  - `$0` - current process name
+
+- position var
+  - `$1 ... ${10}`
+  - default val for empty var `var2=${2-_}`
+
+* Enviroment Configuration
+
+* Execute order 
+  - /etc/profile
+  - /etc/profile.d/
+  - ~/.bash_profile
+  - ~/.bashrc
+  - /etc/bashrc
+
+* login shell `su - user` will use all config files, no-login shell `su user` will use bashrc
+```
+su - root # all 4 files (profile and bashrc) will be used, RECOMENDED
+su root   # 2 bashrc will be used (.bashrc, /etc/bashrc), not recomended since the config were not wholely executed
+```
+
+## Shell Syntax
+
+#### Array
+
+```
+IPTS=( 10.0.0.1 127.0.0.1 )
+echo ${IPTS[@]}   # echo all items
+echo ${#IPTS[@]}   # echo array len
+echo ${IPTS[0]}   # echo first item
+```
+
+#### Number, mathmatic operator
+
+```
+expr 3+4	# expr only supports integer
+let var1=10
+(( a = 10 ))
+(( a++ ))
+echo $(( 10+2 ))
+```
+
+#### Special Symbol
+
+- `()` 
+  - will create a child shell,  `( var1abc )`
+  - cmd execute result , `ret=$(ls)`
+  - array
+  - (()) math calculation
+
+- `[]`
+  - `[[ 5 > 4 ]]`
+  - `[ 5 -gt 4 ]`
+  - see also TEST
+
+- `{}`
+  - range `echo {0..9}`
+  - replace `cp ./abc{.txt,.bak}`
+
+* Test
+
+  - `[]` is the simplized `test` cmd
+  - `[[]]` supports ` < > && ||`
+
+#### case
+
+```
+case "$1" in
+    "start"|"START")
+      echo "y"
+      ;;
+    *)
+      echo "Usage: $0 {start|stop|restart}"
+      ;;
+esac
+```
+
+#### For / While
+
+- shell style
+```
+for name in `ls *.mp3`
+do
+  mv $name $(basebame $name .mp3).mp4
+done
+```
+  - `basename filename ext`
+
+- C style
+
+```
+for (( i=1; i<=10; i++ ))
+do
+	echo "hi"
+done
+```
+- While
+
+```
+while [ $# -gt 0 ]
+do
+    if [ $1 -eq help ] ; then
+    	echo "has help"
+    fi
+
+    echo "SHIFT to next parameter"
+    shift
+done
+```
+
+#### Function
+
+```
+function chpid() {
+	local i ## declare i is local to avoid conflict
+
+	for i in $*
+	do
+	  [ -d "/proc/$i" ] && return 0
+	done
+	return 1
+}
+```
+
+- built-in function `/etc/init.d/functions`
+- `source filename` to load functions
+
+* `ulimit -a` show resource limit of users
+* `nice renice` adjust CPU resource
+
+* Signal
+  - `kill` send 15 to application
+  - `Ctrl+C` is signal 2
+  - 9 is not block / catchable / trapable
+
+```
+trap "catched signal 15" 15
+trap "catched signal 2" 2
+```
+
+#### Schedule Task
+
+- `at` once task
+  ```
+  at 18:30
+  at> echo "it is time to run task"
+  at> <EOT> 
+  # Ctrl+D to EOT
+
+  atq # show at queue
+  ```
+
+- Periodic task `cron`
+  ```
+  $ crontab -e
+  * * * * * /usr/bin/date >> taskoutput.log
+
+  $ tail /var/log/cron       # show cron edit history
+  ```
 
 
 
