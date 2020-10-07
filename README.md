@@ -3,54 +3,57 @@
 <!-- MarkdownTOC autolink=true levels="1,2,3" -->
 
 - [linux](#linux)
-		- [check OS release version](#check-os-release-version)
-		- [vim color scheme](#vim-color-scheme)
-		- [crontab - scheduled task](#crontab---scheduled-task)
-	- [Commands](#commands)
-		- [`help`, `man`, `info`](#help-man-info)
-		- [screen](#screen)
-		- [ps pstree top](#ps-pstree-top)
-		- [nice renice job](#nice-renice-job)
-		- [kill](#kill)
-		- [nohup deamon](#nohup-deamon)
-		- [systemctl / service](#systemctl--service)
-	- [logs /var/log](#logs-varlog)
-	- [User & Group](#user--group)
-		- [User](#user)
-		- [Group](#group)
-		- [su, sudo](#su-sudo)
-		- [file permission](#file-permission)
-	- [Network Configuration](#network-configuration)
-		- [net-tools](#net-tools)
-		- [iproute2](#iproute2)
-	- [network trouble shooting](#network-trouble-shooting)
-		- [ping](#ping)
-		- [traceroute](#traceroute)
-		- [mtr        - my traceroute, analysis data package](#mtr---my-traceroute-analysis-data-package)
-		- [nslookup   - domain](#nslookup---domain)
-		- [telnet     - host can access, but not service, check port](#telnet---host-can-access-but-not-service-check-port)
-		- [tcpdump    -  all tcp packages](#tcpdump---all-tcp-packages)
-		- [netstat    - service listen](#netstat---service-listen)
-		- [ss](#ss)
-	- [Network Service Management](#network-service-management)
-	- [Liberay Management](#liberay-management)
-		- [rpm](#rpm)
-		- [deb](#deb)
-	- [Package Management](#package-management)
-		- [yum](#yum)
-		- [apt](#apt)
-	- [Kernel](#kernel)
-	- [memory / disk](#memory--disk)
-	- [SELinux](#selinux)
-	- [File System](#file-system)
-	- [System info](#system-info)
-	- [Linux Startup](#linux-startup)
+    - [check OS release version](#check-os-release-version)
+    - [vim color scheme](#vim-color-scheme)
+    - [crontab - scheduled task](#crontab---scheduled-task)
+  - [Commands](#commands)
+    - [`help`, `man`, `info`](#help-man-info)
+    - [screen](#screen)
+    - [ps pstree top](#ps-pstree-top)
+    - [nice renice job](#nice-renice-job)
+    - [kill](#kill)
+    - [nohup deamon](#nohup-deamon)
+    - [systemctl / service](#systemctl--service)
+  - [logs /var/log](#logs-varlog)
+  - [User & Group](#user--group)
+    - [User](#user)
+    - [Group](#group)
+    - [su, sudo](#su-sudo)
+    - [file permission](#file-permission)
+  - [Network Configuration](#network-configuration)
+    - [net-tools](#net-tools)
+    - [iproute2](#iproute2)
+  - [network trouble shooting](#network-trouble-shooting)
+    - [ping](#ping)
+    - [traceroute](#traceroute)
+    - [mtr        - my traceroute, analysis data package](#mtr---my-traceroute-analysis-data-package)
+    - [nslookup   - domain](#nslookup---domain)
+    - [telnet     - host can access, but not service, check port](#telnet---host-can-access-but-not-service-check-port)
+    - [tcpdump    -  all tcp packages](#tcpdump---all-tcp-packages)
+    - [netstat    - service listen](#netstat---service-listen)
+    - [ss](#ss)
+  - [Network Service Management](#network-service-management)
+  - [Liberay Management](#liberay-management)
+    - [rpm](#rpm)
+    - [deb](#deb)
+  - [Package Management](#package-management)
+    - [yum](#yum)
+    - [apt](#apt)
+  - [Kernel](#kernel)
+  - [memory / disk](#memory--disk)
+  - [SELinux](#selinux)
+  - [File System](#file-system)
+  - [System info](#system-info)
+  - [Linux Startup](#linux-startup)
 - [Shell](#shell)
-	- [Shell script execution](#shell-script-execution)
-	- [Redirection](#redirection)
-	- [Variable](#variable)
-		- [System variable](#system-variable)
-	- [Shell Syntax](#shell-syntax)
+  - [Shell script execution](#shell-script-execution)
+  - [Redirection](#redirection)
+  - [Variable](#variable)
+    - [System variable](#system-variable)
+  - [Shell Syntax](#shell-syntax)
+    - [Sed & Awk](#sed--awk)
+  - [Service Management](#service-management)
+    - [iptables](#iptables)
 
 <!-- /MarkdownTOC -->
 
@@ -779,21 +782,124 @@ trap "catched signal 2" 2
   $ tail /var/log/cron       # show cron edit history
   ```
 
+### Sed & Awk
 
+They are lines editor, while vim is full text editor.
 
+- sed v.s. awk
+  - awk prefer normal text (formatted with seperators)
+  - sed handles un-formatted text
 
+#### Sed
 
+- -n : supress the print of each line
+- N; read next line
+- P; output from 1st char to 1st \n
+- D; delete from 1st char to 1st \n
 
+```
+sed 'N;s/\n//;s/hello bash/hello sed/;P;D' a.txt
+```
 
+- store mode
+  - h, H : text mode -> store mode (H is append)
+  - g, G : store mode -> text mode
+  - x : exchange text mode and store mode
 
+```
+# revise order
 
+sed -n '1!G;h;$p'
+sed '1!G;h;$!d'
+```
 
+#### Awk
 
+- -F : set seperator char `awk -F "'" '/^menu/ { print $0 }` a.txt
 
+## Service Management
 
+- change user password : `echo 12345 | passwd --stdin user1`
 
+### iptables
 
+```
+iptables -vnL # same as iptable -t filter -vnL
+iptables -A INPUT -s 10.0.0.1 -j ACCEPT 
+iptables -A INPUT -s 10.0.0.1 -j DROP   # order matters, first matched rule will be used
+# -A : append at end  -I : insert at top
 
+```
+- common usage: default policy is DROP, only allow some ips
+```
+iptables -P INPUT DROP
+```
+
+- `/etc/sysconfig/iptables`
+  - `iptables-save` show current config in memory
+  - save to file: `iptables-save > /etc/sysconfig/iptables`
+  - `service iptables start` to start service after reboot
+
+- yum / rpm
+
+```
+yum install iptables-services
+rpm -ql iptables-services   # show detail info of package
+```
+- show service status
+```
+systemctl status firewalld.service
+systemctl start firewalld.service
+```
+
+#### selinux
+
+```
+$ getenforce
+Permissive
+```
+- if selinux is off, some settings may not be recognezied after enable again
+  - solution `touch /.autorelabel`, `grub rd.break , genhomedircon`
+
+#### Service
+
+- check port of a service 
+  - `grep telnet /etc/services`
+
+- `systemctl status | start | stop | restart | enable | disable sshd.service`
+
+#### tcpdump
+
+```
+tcpdump -i any port 2222 -s 1500 -tttt -w /tmp/tcpdump.log
+apt install wireshark
+wireshark -r /tmp/tcpdump.log
+```
+
+#### ssh
+
+- windows ssh client
+  - putty
+  - Xshell
+  - SecureCRT
+
+#### ftp
+
+- /etc/vsftpd/
+- /etc/vsftpd/ftpusers - black user list
+- /etc/vstpd/user_list - black/white user list
+
+#### man
+
+```
+man -k 
+man 5  - check help of config file
+```
+
+#### useradd
+```
+useradd user1 -d /home/user1 -s /sbin/nologin
+```
 
 
 
