@@ -30,7 +30,7 @@
     - [nslookup   - domain](#nslookup---domain)
     - [telnet     - host can access, but not service, check port](#telnet---host-can-access-but-not-service-check-port)
     - [tcpdump    -  all tcp packages](#tcpdump---all-tcp-packages)
-    - [netstat    - service listen](#netstat---service-listen)
+    - [netstat    - service listen, port listening](#netstat---service-listen-port-listening)
     - [ss](#ss)
   - [Network Service Management](#network-service-management)
   - [Liberay Management](#liberay-management)
@@ -407,7 +407,7 @@ tcpdump -i any -n host 10.1.1.2 [and port 80]
 ```
 * `-n` show ip instead of domain
 
-### netstat    - service listen 
+### netstat    - service listen, port listening
 ```
 netstat -ntpl 
 ```
