@@ -797,12 +797,23 @@ They are lines editor, while vim is full text editor.
 - P; output from 1st char to 1st \n
 - D; delete from 1st char to 1st \n
 
+- only print replaced lines: `sed -n 's/aa/bb/p'`
+- only replaced 2nd matched item: `sed 's/aa/bb/2'`
+
+- =; print line number
+- c; change matched line
+- a; append to the next line of matched line
+- r; read from file to next line of matched line
+- n; skip
+- w; write matched lines to file
+- delete matched lines: `sed '/ab/d'`
+
 ```
 sed 'N;s/\n//;s/hello bash/hello sed/;P;D' a.txt
 ```
 
 - store mode
-  - h, H : text mode -> store mode (H is append)
+  - h, H : text mode -> store mode (h is replace, H is append)
   - g, G : store mode -> text mode
   - x : exchange text mode and store mode
 
@@ -815,7 +826,8 @@ sed '1!G;h;$!d'
 
 #### Awk
 
-- -F : set seperator char `awk -F "'" '/^menu/ { print $0 }` a.txt
+- -F : set seperator char `awk -F "'" '/^menu/{ print x++, $0 } a.txt `
+
 
 ## Service Management
 
