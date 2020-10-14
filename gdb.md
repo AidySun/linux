@@ -3,6 +3,11 @@
 
 *`g++ -g test.cpp`: -g : generate source code level debug info*
 
+## install
+
+### [mac](https://zhuanlan.zhihu.com/p/68398728)
+
+
 ## Launch
 
 - `gdb` then using `file` or `exec-file` to load executable file
