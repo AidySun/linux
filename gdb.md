@@ -52,6 +52,13 @@
 - `list` show source, `l 19,39`: show line 19-39 code
   - `l test.cpp:22`
 
+
+- pt：查看变量的真实类型，不受 typedef 的影响。up/down：在函数调用栈里上下移动。
+- fin：直接运行到函数结束。
+- i b：查看所有的断点信息。
+- wh：启动“可视化调试”。这个是我最喜欢的命令，可以把屏幕分成上下两个窗口，上面显示源码，下面是 GDB 命令输出，不必再用“l”频繁地列出源码了，能够大大提高调试的效率。
+
+
 ## breakpoints
 
 - list `info breakpoints`
