@@ -2,6 +2,11 @@
 
 ## jvm oom 
 
+The issue was the application was hang. After debug into the code, I fount the JVM OOM occurs in an embedded process.
+it was difficult to debug. Using GC analysis tools `jstat` and `jmap`, found the clue of String object.
+
+The solution was to, move the call into the same process, avoid inter-process call. Delete created string object. Add debug configuation for future usage.
+
 ```
 Before fix:
 
@@ -21,5 +26,11 @@ Before fix:
    6:         26316        1014568  <symbolKlass>
    7:          1299         757920  <constantPoolKlass>
 ```
+
+## Interprocess
+
+Before: single process with embedded JNI. 
+Improve 1: macOS: fock() subprocess. Win: command line with parameters. Issue: command line has length limit, and forked sub-process doesn't has enough memory.
+Final solution: standalone process, communication via shared memory for small data and tmp files for large data.
 
 
