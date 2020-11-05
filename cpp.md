@@ -154,6 +154,63 @@ template <typename T> void function(T&& t) {
 }
 ```
 
+## C Struct 内存对齐
+
+- 对齐规则如下：
+  - 如果设置了内存对齐为 i 字节，类中最大成员对齐字节数为j，那么整体对齐字节n = min(i, j)  （某个成员的对齐字节数定义：如果该成员是c++自带类型如int、char、double等，那么其对齐字节数=该类型在内存中所占的字节数；如果该成员是自定义类型如某个class或者struct，那个它的对齐字节数 = 该类型内最大的成员对齐字节数《详见实例4》）
+  - 每个成员对齐规则：类中第一个数据成员放在offset为0的位置；对于其他的数据成员（假设该数据成员对齐字节数为k），他们放置的起始位置offset应该是 min(k, n) 的整数倍
+  - 整体对齐规则：最后整个类的大小应该是n的整数倍
+  - 当设置的对齐字节数大于类中最大成员对齐字节数时，这个设置实际上不产生任何效果（实例2）；当设置对齐字节数为1时，类的大小就是简单的把所有成员大小相加
+
+- summary:
+  - each member should starts from the address of the times of its alignment/size
+    ```
+    struct x {
+        char c; int i;
+    };
+    ```
+    - `sizeof(x)==8`, since `c`'s address is `0`, `i` size is 4, it needs to starts at the address of times of 4, here it is `4`, then `char` aligns 3 bits more.
+  - entire struct size should be the times of max(member_alignment)
+    ```
+	struct x {
+	   int b;            // 4 bytes
+	   char d;           // 1 byte , aligned to short c
+	   short c;          // 2 bytes, start from [6], which align char d to be 2 bytes
+	   char _pad1[1];    // 1 , 
+	};
+    ```
+    - total size is 13 after alignment, but it's not times of max(member_alignment), here is `4` of `int b`, then `sizeof(x)==12`.
+
+- `#pragma pack(2)` sets the alignment
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
