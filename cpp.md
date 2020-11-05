@@ -16,11 +16,29 @@
   - decltype 会保留引用类型，
   - 而 auto 会抛弃引用类型，直接推导出它的原始类型。
 
+## inline
+
+虚函数可以是内联函数，内联是可以修饰虚函数的，但是当虚函数表现多态性的时候不能内联。
+内联是在编译器建议编译器内联，而虚函数的多态性在运行期，编译器无法知道运行期调用哪个代码，因此虚函数表现为多态性时（运行期）不可以内联。
+inline virtual 唯一可以内联的时候是：编译器知道所调用的对象是哪个类（如 Base::who()），这只有在编译器具有实际对象而不是对象的指针或引用时才会发生。
+
 ## Const / Volatile / Mutable
 
 - volatile 会禁止编译器做优化
   `const volatile int MAX_LEN  = 1024; // MAX_LEN 可被修改`
 - mutable它用来修饰成员变量，允许 const 成员函数修改，mutable 变量的变化不影响对象的常量性，但要小心不要误用损坏对象。 
+
+## Override vs Overwrite vs Overload
+
+- In C++ terminology, you have overriding (relating to virtual methods in a class hierarchy) 
+- and overloading (related to a function having the same name but taking different parameters). 
+- You also have hiding of names (via explicit declaration of the same name in a nested declarative region or scope). 
+- The C++ standard does not use the term "overwrite".
+
+## _vfptr
+
+https://blog.twofei.com/496/
+虚函数, 则查找虚函数表, 并进行后续的调用. 虚函数表在定义一个时, 编译器就为我们创建好了的. 所有的, 同一个类, 共用同一份虚函数表.
 
 ## Smart Pointer
 
