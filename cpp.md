@@ -185,12 +185,41 @@ template <typename T> void function(T&& t) {
 
 
 
+## General
 
+- sizeof vs strlen
+  - sizeof is an operator while strlen is a function
+  - sizeof(char*) whould count the ending null char, strlen won't
 
+- nullptr vs NULL
+  - `nullptr` is a keyword; `NULL` is a macro def.
+  - easier to express int 0 and pointer, especially for template programming. Since NULL is a macro defined as 0. 
+    ```
+    void func(void*) { ... }
+    void func(int) { ... }
 
+    func(NULL); // this calls func(int) which was meant to be func(void*);
+    ```
 
+## IPC - inter process communication
 
+- Shared file
+- Shared memory
+- Message queue
+  - bidirectional, any order, can has priority
+  - in kernel
+  - no lock
+  - no limit for parent/child processes
+  - `msgsnd, msgget, msgrcv, msgctl, ftok`
+- unix pipe
+  - unidirectional, FIFO, one to one (end to end)
+  - `pipe()`
 
+## Client-server communication
+
+Pipe
+Socket
+Remote Procedural calls (RPCs)
 
 
 
