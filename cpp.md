@@ -1,6 +1,42 @@
 # C++
 
-## 自动类型推导
+<!-- MarkdownTOC autolink=true -->
+
+- [C++11](#c11)
+- [Auto, decltype](#auto-decltype)
+- [inline](#inline)
+- [Const , Volatile , Mutable](#const--volatile--mutable)
+- [Override vs Overwrite vs Overload](#override-vs-overwrite-vs-overload)
+- [vfptr](#vfptr)
+- [Smart Pointer](#smart-pointer)
+- [String](#string)
+  - [regex](#regex)
+- [thread](#thread)
+- [Container](#container)
+  - [sort](#sort)
+  - [search](#search)
+  - [Lib & Tools](#lib--tools)
+- [exception](#exception)
+- [lambda](#lambda)
+- [design pattern](#design-pattern)
+- [forward](#forward)
+- [C Struct 内存对齐](#c-struct-%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90)
+- [General](#general)
+- [IPC - inter process communication](#ipc---inter-process-communication)
+- [Client-server communication](#client-server-communication)
+- [auto_ptr , unique_ptr](#auto_ptr--unique_ptr)
+- [rvalue , move, std::forward](#rvalue--move-stdforward)
+  - [完美转发](#%E5%AE%8C%E7%BE%8E%E8%BD%AC%E5%8F%91)
+  - [move constructor / assignment](#move-constructor--assignment)
+
+<!-- /MarkdownTOC -->
+
+
+## C++11
+
+http://c.biancheng.net/cplus/11/
+
+## Auto, decltype
 
 - since C++ 11
 - “自动类型推导”是给编译器下的指令，是编译阶段的特殊指令。
@@ -22,7 +58,7 @@
 内联是在编译器建议编译器内联，而虚函数的多态性在运行期，编译器无法知道运行期调用哪个代码，因此虚函数表现为多态性时（运行期）不可以内联。
 inline virtual 唯一可以内联的时候是：编译器知道所调用的对象是哪个类（如 Base::who()），这只有在编译器具有实际对象而不是对象的指针或引用时才会发生。
 
-## Const / Volatile / Mutable
+## Const , Volatile , Mutable
 
 - volatile 会禁止编译器做优化
   `const volatile int MAX_LEN  = 1024; // MAX_LEN 可被修改`
@@ -35,7 +71,7 @@ inline virtual 唯一可以内联的时候是：编译器知道所调用的对�
 - You also have hiding of names (via explicit declaration of the same name in a nested declarative region or scope). 
 - The C++ standard does not use the term "overwrite".
 
-## _vfptr
+## vfptr
 
 https://blog.twofei.com/496/
 虚函数, 则查找虚函数表, 并进行后续的调用. 虚函数表在定义一个时, 编译器就为我们创建好了的. 所有的, 同一个类, 共用同一份虚函数表.
@@ -240,9 +276,62 @@ Socket
 Remote Procedural calls (RPCs)
 
 
+## auto_ptr , unique_ptr
+
+- auto_ptr has assignment constructor, unique_ptr must use std::move().
+- unique_ptr supports array (delete []), auto_ptr does not.
+- std::make_unique(40); // since C++14
 
 
+## rvalue , move, std::forward
 
+### 完美转发
+
+讲了这么多左值右值和move语义，C++11正是利用它们解决了C++98解决不了的完美转发(perfect forwarding)问题，即实参被传入到函数中，当它被再传到另一个函数中，它依然是一个左值或右值，我们来看一个例子:
+```
+template <class T>
+void f2(T t){
+  cout<<"f2"<<endl;
+}
+
+template <class T>
+void f1(T t){
+  cout<<"f1"<<endl;
+  f2(t);  //如果t是右值，我们希望传入f2也是右值
+}         //如果t是左值，我们希望传入f2也是左值
+
+//在main函数里:
+int a = 2;
+f1(3); //传入右值
+f1(a); //传入左值
+```
+C++11之前的情况是怎么样的呢？当我们从f1调用f2的时候，不管传入f1的是右值还是左值，因为t是一个变量名，传入f2的时候都变成了左值，这就会造成因为调用T的拷贝构造函数而生成不必要的拷贝浪费大量资源，我们来看C++11如何解决这个问题：
+```
+template <class T>
+void f2(T t){
+  cout<<"f2"<<endl;
+}
+
+template <class T>
+void f1(T&& t){    //这是通用引用，而不是右值引用
+  cout<"f1"<<endl;
+  f2(std::forward<T>(t));  //std::forward<T>(t)用来把t转发为左值或右值，决定于T
+}
+```
+这样当从f1调用f2的时候，调用的就是移动构造函数而不是拷贝构造函数，实现了完美转发，减少了资源浪费。
+
+### move constructor / assignment
+
+```
+class A {
+  A();
+  ~A();
+  A(const A& a);
+  A& operator=(const A& a);
+  A(A&& a);
+  A& operator=(A&& a);
+}
+```
 
 
 
