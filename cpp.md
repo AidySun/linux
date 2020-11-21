@@ -10,24 +10,24 @@
 - [vfptr](#vfptr)
 - [Smart Pointer](#smart-pointer)
 - [String](#string)
-  - [regex](#regex)
+	- [regex](#regex)
 - [thread](#thread)
 - [Container](#container)
-  - [sort](#sort)
-  - [search](#search)
-  - [Lib & Tools](#lib--tools)
+	- [sort](#sort)
+	- [search](#search)
+	- [Lib & Tools](#lib--tools)
 - [exception](#exception)
 - [lambda](#lambda)
 - [design pattern](#design-pattern)
 - [forward](#forward)
-- [C Struct 内存对齐](#c-struct-%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90)
+- [C/C++ Memory Alignment 内存对齐](#cc-memory-alignment-%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90)
 - [General](#general)
 - [IPC - inter process communication](#ipc---inter-process-communication)
 - [Client-server communication](#client-server-communication)
-- [auto_ptr , unique_ptr](#auto_ptr--unique_ptr)
+- [shared_ptr, auto_ptr, unique_ptr](#shared_ptr-auto_ptr-unique_ptr)
 - [rvalue , move, std::forward](#rvalue--move-stdforward)
-  - [完美转发](#%E5%AE%8C%E7%BE%8E%E8%BD%AC%E5%8F%91)
-  - [move constructor / assignment](#move-constructor--assignment)
+	- [完美转发](#%E5%AE%8C%E7%BE%8E%E8%BD%AC%E5%8F%91)
+	- [move constructor / assignment](#move-constructor--assignment)
 
 <!-- /MarkdownTOC -->
 
@@ -208,7 +208,11 @@ template <typename T> void function(T&& t) {
 }
 ```
 
-## C Struct 内存对齐
+## C/C++ Memory Alignment 内存对齐
+
+- `offsetof(type, member)` shows the offset of member.
+- `alignof(type)` shows alignment value
+- `#pragma pack(2)` sets the alignment
 
 - 对齐规则如下：
   - 如果设置了内存对齐为 i 字节，类中最大成员对齐字节数为j，那么整体对齐字节n = min(i, j)  （某个成员的对齐字节数定义：如果该成员是c++自带类型如int、char、double等，那么其对齐字节数=该类型在内存中所占的字节数；如果该成员是自定义类型如某个class或者struct，那个它的对齐字节数 = 该类型内最大的成员对齐字节数《详见实例4》）
@@ -233,9 +237,8 @@ template <typename T> void function(T&& t) {
 	   char _pad1[1];    // 1 , 
 	};
     ```
-    - total size is 13 after alignment, but it's not times of max(member_alignment), here is `4` of `int b`, then `sizeof(x)==12`.
+    - total size is 9 after alignment, but it's not times of max(member_alignment), here is `4` of `int b`, then `sizeof(x)==12`.
 
-- `#pragma pack(2)` sets the alignment
 
 
 
@@ -276,12 +279,29 @@ Socket
 Remote Procedural calls (RPCs)
 
 
-## auto_ptr , unique_ptr
+## shared_ptr, auto_ptr, unique_ptr
 
 - auto_ptr has assignment constructor, unique_ptr must use std::move().
-- unique_ptr supports array (delete []), auto_ptr does not.
+- unique_ptr supports array (delete []), auto_ptr does not. `unique_ptr<int[]> pa`
 - std::make_unique(40); // since C++14
 
+- Since **c++17**, `shared_ptr` supports array. Prior C++17, a customized deletar is needed:
+  ```
+  template <class T>
+  struct array_deletar {
+  	void operator() (T const * p) {
+  		delete[] p;
+  	}
+  };
+  std::shared_ptr<int> sp(new int[10], array_deletar<int>());
+  // or
+  std::shared_ptr<int> sp1(new int[10], std::default_deleter<int[]>());
+  std::shared_ptr<int> sp2(new int[10], [](int *p) { delete[] p; });
+  ```
+- unique_ptr could work with array
+  ```
+  unique_ptr<int[]> up(new int[10]);
+  ```
 
 ## rvalue , move, std::forward
 
