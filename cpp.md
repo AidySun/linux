@@ -28,6 +28,7 @@
 - [rvalue , move, std::forward](#rvalue--move-stdforward)
 	- [完美转发](#%E5%AE%8C%E7%BE%8E%E8%BD%AC%E5%8F%91)
 	- [move constructor / assignment](#move-constructor--assignment)
+- [unordered_set with std::pair](#unordered_set-with-stdpair)
 
 <!-- /MarkdownTOC -->
 
@@ -353,6 +354,24 @@ class A {
 }
 ```
 
+## unordered_set with std::pair
+
+```
+#include <uordered_set>
+#include <utility>
+
+struct pair_hash {
+	template<class T, class P>
+	size_t operator()(std::pair<T, P> p) const {
+		size_t h1 = std::hash<T>()(p.first);
+		size_t h2 = std::hash<P>()(p.second);
+		return h1 ^ h2;
+	}
+};
+
+unordered_set<pair<int, int>, pair_hash> s;
+
+```
 
 
 
