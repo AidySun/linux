@@ -1,5 +1,36 @@
 # Ubuntu
 
+## apt
+
+Prefer `apt` than `apt-get`.
+
+- show all version of package in repository
+  ```
+  apt -list -a pkg_name		# this would identify the installed one
+
+  apt-cache madison pkg_name
+  apt-cache policy pkg_name
+  apt-cache showpkg pkg_name
+  ```
+- remove
+  ```
+  apt-remove  xxx  # remove package without configurations
+  apt purge   xxx  # remove package and configurations
+  ```
+
+- common
+
+```
+apt update # update package repository
+apt upgrade xxx # upgrade package
+```
+
+
+## software / package install
+
+- cmake
+  - download source: 
+
 ## chinese input
 
 ```
