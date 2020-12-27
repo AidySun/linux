@@ -9,7 +9,7 @@
         - [`help`, `man`, `info`](#help-man-info)
         - [cp, tail, tar, gzip](#cp-tail-tar-gzip)
         - [screen](#screen)
-        - [ps pstree top](#ps-pstree-top)
+        - [ps pstree top \(process management\)](#ps-pstree-top-process-management)
         - [nice renice job](#nice-renice-job)
         - [kill](#kill)
         - [nohup deamon](#nohup-deamon)
@@ -39,8 +39,11 @@
     - [Package Management](#package-management)
         - [yum](#yum)
         - [apt](#apt)
+        - [source code compile](#source-code-compile)
     - [Kernel](#kernel)
     - [memory / disk](#memory--disk)
+        - [memory](#memory)
+        - [disk](#disk)
     - [SELinux](#selinux)
     - [File System](#file-system)
     - [System info](#system-info)
@@ -178,7 +181,7 @@ A     # set title
 k     # kill
 ```
 
-### ps pstree top
+### ps pstree top (process management)
 ```
 ps -ef
 ps -eLf           # L - LWP (light weight process) thread
@@ -188,6 +191,9 @@ ps -aux
   * load avg: 1min 5min 15min
   * `s` - set refresh second
   * `o` - set order
+  ```
+  top -p <process_id>
+  ```
 
 ### nice renice job
 
@@ -203,6 +209,12 @@ ps -aux
 * bg/fg <index> # rerun stopped process
 
 ### kill
+
+- Two ways of inter-process-communication
+  - pipe
+  - signal
+
+- list signals : ` kill -l `
 
 * ctrl+c = 2)SIGINT
 ```
@@ -252,8 +264,6 @@ nohup cmd & # output to nohub.out
 * secure
 * cron
 
-
- 
 ## User & Group
 
 ### User
@@ -362,6 +372,8 @@ su szh  # non-complete user switch
 * change IP
 ```
 ifconfig eth0 192.168.1.22  netmask 255.255.255.0   # change ip [netmask]
+ifconfig eth0 up
+ifconfig eth0 down
 
 # reset ifconfig
 ifdown eht0  
@@ -395,6 +407,8 @@ route add -net  192.168.0.0 gw 10.21.1.2
 ## network trouble shooting
 
 ### ping
+  - network issue or firewall
+
 ### traceroute
 ```
 traceroute -w 1 www.baidu.com  # max wait 1 second
@@ -410,9 +424,14 @@ telnet www.baidu.com 80
 ```
 
 ### tcpdump    -  all tcp packages
+* wireshark can read .cap file saved by tcpdump
+
 ```
 tcpdump -i any -n port 80 [-w dump.log]
 tcpdump -i any -n host 10.1.1.2 [and port 80]
+
+tcpdump -i any host www.baidu.com -w baidu.cap
+tcpdump -r baidu.cap http
 
 ```
 * `-n` show ip instead of domain
@@ -509,6 +528,14 @@ yum makecache
 
 ### apt
 
+### source code compile
+
+- general 3 steps
+```
+./configure [--prefix=/usr/local/myLib]
+make -j4
+make install
+```
 
 ## Kernel
 
@@ -526,10 +553,18 @@ yum makecache
 
 ## memory / disk
 
+### memory
+
 * `free`
   * `-m g`
 
+* swap - same concept on Windows is virtual memory
+  - it's on disk, when memory is not enough
+
+### disk
+
 * `fdisk`
+  - `-l` list
 * `parted`
 * `df`
 * `du` - real size  - size of datablocks
@@ -542,6 +577,8 @@ yum makecache
    ls -lh bfile # 120M
    du -h  bfile # 40M
    ```
+   - `ls` show the size info in inode 
+   - `du` reads the count of datablock
 
 ## SELinux
 
@@ -556,9 +593,16 @@ ls -Z
 ## File System
 
 * ext4
-  * super block
+  * super block and copy of super block
+    - store info e.g. total file count
   * inode
+    - stores permission, size, time
+    - file name is not stored in inode, it is stored in parent folder's inode, or (if there are too many files) may in parent folder's datablock
   * datablock
+    - stores content/data of the file
+    - `ls` vs `du`
+      - `ls` show the size info in inode 
+      - `du` reads the count of datablock
   * `ln -s src dest`
   * `facl, getfacl, setfacl`
 * xfx
