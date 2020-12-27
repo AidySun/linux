@@ -1,59 +1,59 @@
 
-
 <!-- MarkdownTOC autolink=true levels="1,2,3" -->
 
 - [linux](#linux)
-    - [check OS release version](#check-os-release-version)
-    - [vim color scheme](#vim-color-scheme)
-    - [crontab - scheduled task](#crontab---scheduled-task)
-  - [Commands](#commands)
-    - [`help`, `man`, `info`](#help-man-info)
-    - [screen](#screen)
-    - [ps pstree top](#ps-pstree-top)
-    - [nice renice job](#nice-renice-job)
-    - [kill](#kill)
-    - [nohup deamon](#nohup-deamon)
-    - [systemctl / service](#systemctl--service)
-  - [logs /var/log](#logs-varlog)
-  - [User & Group](#user--group)
-    - [User](#user)
-    - [Group](#group)
-    - [su, sudo](#su-sudo)
-    - [file permission](#file-permission)
-  - [Network Configuration](#network-configuration)
-    - [net-tools](#net-tools)
-    - [iproute2](#iproute2)
-  - [network trouble shooting](#network-trouble-shooting)
-    - [ping](#ping)
-    - [traceroute](#traceroute)
-    - [mtr        - my traceroute, analysis data package](#mtr---my-traceroute-analysis-data-package)
-    - [nslookup   - domain](#nslookup---domain)
-    - [telnet     - host can access, but not service, check port](#telnet---host-can-access-but-not-service-check-port)
-    - [tcpdump    -  all tcp packages](#tcpdump---all-tcp-packages)
-    - [netstat    - service listen, port listening](#netstat---service-listen-port-listening)
-    - [ss](#ss)
-  - [Network Service Management](#network-service-management)
-  - [Liberay Management](#liberay-management)
-    - [rpm](#rpm)
-    - [deb](#deb)
-  - [Package Management](#package-management)
-    - [yum](#yum)
-    - [apt](#apt)
-  - [Kernel](#kernel)
-  - [memory / disk](#memory--disk)
-  - [SELinux](#selinux)
-  - [File System](#file-system)
-  - [System info](#system-info)
-  - [Linux Startup](#linux-startup)
+        - [check OS release version](#check-os-release-version)
+        - [vim color scheme](#vim-color-scheme)
+        - [crontab - scheduled task](#crontab---scheduled-task)
+    - [Commands](#commands)
+        - [`help`, `man`, `info`](#help-man-info)
+        - [cp, tail, tar, gzip](#cp-tail-tar-gzip)
+        - [screen](#screen)
+        - [ps pstree top](#ps-pstree-top)
+        - [nice renice job](#nice-renice-job)
+        - [kill](#kill)
+        - [nohup deamon](#nohup-deamon)
+        - [systemctl / service](#systemctl--service)
+    - [logs /var/log](#logs-varlog)
+    - [User & Group](#user--group)
+        - [User](#user)
+        - [Group](#group)
+        - [su, sudo](#su-sudo)
+        - [chmod, chown, SUID](#chmod-chown-suid)
+    - [Network Configuration](#network-configuration)
+        - [net-tools](#net-tools)
+        - [iproute2](#iproute2)
+    - [network trouble shooting](#network-trouble-shooting)
+        - [ping](#ping)
+        - [traceroute](#traceroute)
+        - [mtr        - my traceroute, analysis data package](#mtr---my-traceroute-analysis-data-package)
+        - [nslookup   - domain](#nslookup---domain)
+        - [telnet     - host can access, but not service, check port](#telnet---host-can-access-but-not-service-check-port)
+        - [tcpdump    -  all tcp packages](#tcpdump---all-tcp-packages)
+        - [netstat    - service listen, port listening](#netstat---service-listen-port-listening)
+        - [ss](#ss)
+    - [Network Service Management](#network-service-management)
+    - [Liberay Management](#liberay-management)
+        - [rpm](#rpm)
+        - [deb](#deb)
+    - [Package Management](#package-management)
+        - [yum](#yum)
+        - [apt](#apt)
+    - [Kernel](#kernel)
+    - [memory / disk](#memory--disk)
+    - [SELinux](#selinux)
+    - [File System](#file-system)
+    - [System info](#system-info)
+    - [Linux Startup](#linux-startup)
 - [Shell](#shell)
-  - [Shell script execution](#shell-script-execution)
-  - [Redirection](#redirection)
-  - [Variable](#variable)
-    - [System variable](#system-variable)
-  - [Shell Syntax](#shell-syntax)
-    - [Sed & Awk](#sed--awk)
-  - [Service Management](#service-management)
-    - [iptables](#iptables)
+    - [Shell script execution](#shell-script-execution)
+    - [Redirection](#redirection)
+    - [Variable](#variable)
+        - [System variable](#system-variable)
+    - [Shell Syntax](#shell-syntax)
+        - [Sed & Awk](#sed--awk)
+    - [Service Management](#service-management)
+        - [iptables](#iptables)
 
 <!-- /MarkdownTOC -->
 
@@ -112,9 +112,15 @@ crontab -e
   8. system management commands - like `mount`, mostly executed by `root`
   9. kernel routines - out of date
 
-* all sections 
+* 	all sections 
 ` man -a passwd`
 
+##### zh_CN manpages
+
+```
+apt install manpages-zh
+alias manzh="man -L zh_CN.utf8 "
+```
 
 #### help
 
@@ -130,6 +136,7 @@ crontab -e
 
 * it has more detail info than `help`.
 
+### cp, tail, tar, gzip
 * cp
 ```
 cp -a
@@ -141,8 +148,8 @@ cp -p
 * tar, gzip, bzip2
 ```
 tar cf  new.tar     sourceDir
-tar czf new.tar.gz  sourceDir   # zip with gzip.tgz
-tar cjf new.tar.bz2 sourceDir   # zip with bzip2.tbz2
+tar czf new.tar.gz  sourceDir   # zip with gzip. Ext .tgz = .tar.gz
+tar cjf new.tar.bz2 sourceDir   # zip with bzip2. Ext .tbz2 = .tar.bz2
 tar xf  .. -C ..
 tar zxf .. -C ..
 tar jxf .. -C ..
@@ -256,8 +263,10 @@ useradd szh
 id szh
 tail /etc/passwd
 tail /etc/shadow
+
 passwd szh
-userdel -r szh
+
+userdel -r szh	// -r would remove home as well
 
 usermod -d /home/newhome/ szh
 
@@ -279,6 +288,7 @@ usermod -g group1 szh
 
 ```
 su - szh  # - means not only user, also the environment. login with user
+su szh  # non-complete user switch
 ```
 
 * sudo
@@ -287,7 +297,7 @@ su - szh  # - means not only user, also the environment. login with user
   user    localhost/ALL=command1, command2    NeedPassword=ALL
   ```
 
-### file permission
+### chmod, chown, SUID
 
 * does not work for `root` user
 * r = 4, w = 2, x = 1
