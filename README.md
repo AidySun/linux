@@ -47,16 +47,8 @@
     - [SELinux](#selinux)
     - [File System](#file-system)
     - [System info](#system-info)
+        - [show archtecture info](#show-archtecture-info)
     - [Linux Startup](#linux-startup)
-- [Shell](#shell)
-    - [Shell script execution](#shell-script-execution)
-    - [Redirection](#redirection)
-    - [Variable](#variable)
-        - [System variable](#system-variable)
-    - [Shell Syntax](#shell-syntax)
-        - [Sed & Awk](#sed--awk)
-    - [Service Management](#service-management)
-        - [iptables](#iptables)
 
 <!-- /MarkdownTOC -->
 
@@ -592,21 +584,10 @@ ls -Z
 
 ## File System
 
-* ext4
-  * super block and copy of super block
-    - store info e.g. total file count
-  * inode
-    - stores permission, size, time
-    - file name is not stored in inode, it is stored in parent folder's inode, or (if there are too many files) may in parent folder's datablock
-  * datablock
-    - stores content/data of the file
-    - `ls` vs `du`
-      - `ls` show the size info in inode 
-      - `du` reads the count of datablock
-  * `ln -s src dest`
-  * `facl, getfacl, setfacl`
-* xfx
-* NTFS
+* ext4 * super block and copy of super block - store info e.g. total file count * inode - stores permission, size, time
+- file name is not stored in inode, it is stored in parent folder's inode, or (if there are too many files) may in
+parent folder's datablock * datablock - stores content/data of the file - `ls` vs `du` - `ls` show the size info in
+inode  - `du` reads the count of datablock * `ln -s src dest` * `facl, getfacl, setfacl` * xfx * NTFS
 
 * `/ect/fstab` stores the mount devices to folders
 * `free -m` show memory info
@@ -620,356 +601,27 @@ ls -Z
 
 * `iftop -P` show network status
 
+### show archtecture info
+
+```
+# amd
+uname -a
+arch
+
+# both amd and arm
+cat /proc/cpuinfo
+```
+- i386 686 are 32bit, x86_64 is 64bit
+
+
 ## Linux Startup
 
-* BIOS - MBR - BootLoader(grub) - kernel - systemd - SystemInit - shell
-* `hexdump -C mbr.bin`
-  -  end of 512 bytes is `55 aa` means the device is bootable
+* BIOS (choose startup device) - MBR(main boot area on disk/startup device) - BootLoader(grub) - kernel - systemd/init - SystemInit - shell
 
-# Shell
-
-* *Sha-Bang* : `#!/bin/bash`
-
-## Shell script execution
-
-```
-# child bash process will be created to execute the script, `cd /tmp` won't affect executing pwd
-bash ./f.sh
-./f.sh
-
-# executed under current process, `cd /tmp` will change current pwd
-shource ./f.sh
-. f.sh
-```
-
-* build-in commands won't create child shell process, e.g. `ls cd`.
-
-
-## Redirection
-
-* `2>` error
-* `&>` all output
-
-* input & output direction together
-```
-cat > email.txt << EOF
-Hello A,
-This is B. Nice to meet you.
-EOF
-```
-
-## Variable
-
-- varName=valud, `a=123`, no space around `=`
-- let, `let a=10+20`, *calculation in shell is slow*
-- expression result, `letc=$(ls -l .)`, or `letc=\`ls -l .\``
-
-
-- variable scope: only current bash
-  - `unset` to unset a variable
-  - `export` extend the scope to child-shell
-
-### System variable
-
-- `env` - show system variable
-  - capitalized variables are the default variables
-- predefined variable
-  - `$?` - last cmd return code
-  - `$$` - current process pid
-  - `$0` - current process name
-
-- position var
-  - `$1 ... ${10}`
-  - default val for empty var `var2=${2-_}`
-
-* Enviroment Configuration
-
-* Execute order 
-  - /etc/profile
-  - /etc/profile.d/
-  - ~/.bash_profile
-  - ~/.bashrc
-  - /etc/bashrc
-
-* login shell `su - user` will use all config files, no-login shell `su user` will use bashrc
-```
-su - root # all 4 files (profile and bashrc) will be used, RECOMENDED
-su root   # 2 bashrc will be used (.bashrc, /etc/bashrc), not recomended since the config were not wholely executed
-```
-
-## Shell Syntax
-
-#### Array
-
-```
-IPTS=( 10.0.0.1 127.0.0.1 )
-echo ${IPTS[@]}   # echo all items
-echo ${#IPTS[@]}   # echo array len
-echo ${IPTS[0]}   # echo first item
-```
-
-#### Number, mathmatic operator
-
-```
-expr 3+4	# expr only supports integer
-let var1=10
-(( a = 10 ))
-(( a++ ))
-echo $(( 10+2 ))
-```
-
-#### Special Symbol
-
-- `()` 
-  - will create a child shell,  `( var1abc )`
-  - cmd execute result , `ret=$(ls)`
-  - array
-  - (()) math calculation
-
-- `[]`
-  - `[[ 5 > 4 ]]`
-  - `[ 5 -gt 4 ]`
-  - see also TEST
-
-- `{}`
-  - range `echo {0..9}`
-  - replace `cp ./abc{.txt,.bak}`
-
-* Test
-
-  - `[]` is the simplized `test` cmd
-  - `[[]]` supports ` < > && ||`
-
-#### case
-
-```
-case "$1" in
-    "start"|"START")
-      echo "y"
-      ;;
-    *)
-      echo "Usage: $0 {start|stop|restart}"
-      ;;
-esac
-```
-
-#### For / While
-
-- shell style
-```
-for name in `ls *.mp3`
-do
-  mv $name $(basebame $name .mp3).mp4
-done
-```
-  - `basename filename ext`
-
-- C style
-
-```
-for (( i=1; i<=10; i++ ))
-do
-	echo "hi"
-done
-```
-- While
-
-```
-while [ $# -gt 0 ]
-do
-    if [ $1 -eq help ] ; then
-    	echo "has help"
-    fi
-
-    echo "SHIFT to next parameter"
-    shift
-done
-```
-
-#### Function
-
-```
-function chpid() {
-	local i ## declare i is local to avoid conflict
-
-	for i in $*
-	do
-	  [ -d "/proc/$i" ] && return 0
-	done
-	return 1
-}
-```
-
-- built-in function `/etc/init.d/functions`
-- `source filename` to load functions
-
-* `ulimit -a` show resource limit of users
-* `nice renice` adjust CPU resource
-
-* Signal
-  - `kill` send 15 to application
-  - `Ctrl+C` is signal 2
-  - 9 is not block / catchable / trapable
-
-```
-trap "catched signal 15" 15
-trap "catched signal 2" 2
-```
-
-#### Schedule Task
-
-- `at` once task
+* show MBR content:
   ```
-  at 18:30
-  at> echo "it is time to run task"
-  at> <EOT> 
-  # Ctrl+D to EOT
-
-  atq # show at queue
+  dd if=/dev/sda of=mbr.bin bs=512 count=1
+  hexdump -C mbr.bin`
+  // end of 512 bytes is `55 aa` means the device is bootable
   ```
-
-- Periodic task `cron`
-  ```
-  $ crontab -e
-  * * * * * /usr/bin/date >> taskoutput.log
-
-  $ tail /var/log/cron       # show cron edit history
-  ```
-
-### Sed & Awk
-
-They are lines editor, while vim is full text editor.
-
-- sed v.s. awk
-  - awk prefer normal text (formatted with seperators)
-  - sed handles un-formatted text
-
-#### Sed
-
-- -n : supress the print of each line
-- N; read next line
-- P; output from 1st char to 1st \n
-- D; delete from 1st char to 1st \n
-
-- only print replaced lines: `sed -n 's/aa/bb/p'`
-- only replaced 2nd matched item: `sed 's/aa/bb/2'`
-
-- =; print line number
-- c; change matched line
-- a; append to the next line of matched line
-- r; read from file to next line of matched line
-- n; skip
-- w; write matched lines to file
-- delete matched lines: `sed '/ab/d'`
-
-```
-sed 'N;s/\n//;s/hello bash/hello sed/;P;D' a.txt
-```
-
-- store mode
-  - h, H : text mode -> store mode (h is replace, H is append)
-  - g, G : store mode -> text mode
-  - x : exchange text mode and store mode
-
-```
-# revise order
-
-sed -n '1!G;h;$p'
-sed '1!G;h;$!d'
-```
-
-#### Awk
-
-- -F : set seperator char `awk -F "'" '/^menu/{ print x++, $0 } a.txt `
-
-
-## Service Management
-
-- change user password : `echo 12345 | passwd --stdin user1`
-
-### iptables
-
-```
-iptables -vnL # same as iptable -t filter -vnL
-iptables -A INPUT -s 10.0.0.1 -j ACCEPT 
-iptables -A INPUT -s 10.0.0.1 -j DROP   # order matters, first matched rule will be used
-# -A : append at end  -I : insert at top
-
-```
-- common usage: default policy is DROP, only allow some ips
-```
-iptables -P INPUT DROP
-```
-
-- `/etc/sysconfig/iptables`
-  - `iptables-save` show current config in memory
-  - save to file: `iptables-save > /etc/sysconfig/iptables`
-  - `service iptables start` to start service after reboot
-
-- yum / rpm
-
-```
-yum install iptables-services
-rpm -ql iptables-services   # show detail info of package
-```
-- show service status
-```
-systemctl status firewalld.service
-systemctl start firewalld.service
-```
-
-#### selinux
-
-```
-$ getenforce
-Permissive
-```
-- if selinux is off, some settings may not be recognezied after enable again
-  - solution `touch /.autorelabel`, `grub rd.break , genhomedircon`
-
-#### Service
-
-- check port of a service 
-  - `grep telnet /etc/services`
-
-- `systemctl status | start | stop | restart | enable | disable sshd.service`
-
-#### tcpdump
-
-```
-tcpdump -i any port 2222 -s 1500 -tttt -w /tmp/tcpdump.log
-apt install wireshark
-wireshark -r /tmp/tcpdump.log
-```
-
-#### ssh
-
-- windows ssh client
-  - putty
-  - Xshell
-  - SecureCRT
-
-#### ftp
-
-- /etc/vsftpd/
-- /etc/vsftpd/ftpusers - black user list
-- /etc/vstpd/user_list - black/white user list
-
-#### man
-
-```
-man -k 
-man 5  - check help of config file
-```
-
-#### useradd
-```
-useradd user1 -d /home/user1 -s /sbin/nologin
-```
-
-
-
-
-
-
 
