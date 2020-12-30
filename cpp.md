@@ -25,6 +25,8 @@
 - [IPC - inter process communication](#ipc---inter-process-communication)
 - [Client-server communication](#client-server-communication)
 - [shared_ptr, auto_ptr, unique_ptr](#shared_ptr-auto_ptr-unique_ptr)
+- [dynamic_cast , static_cast](#dynamic_cast--static_cast)
+- [TODO: dynamic_pointer_cast, static_pointer_cast, const_pointer_cast](#todo-dynamic_pointer_cast-static_pointer_cast-const_pointer_cast)
 - [rvalue , move, std::forward](#rvalue--move-stdforward)
 	- [完美转发](#%E5%AE%8C%E7%BE%8E%E8%BD%AC%E5%8F%91)
 	- [move constructor / assignment](#move-constructor--assignment)
@@ -303,6 +305,31 @@ Remote Procedural calls (RPCs)
   ```
   unique_ptr<int[]> up(new int[10]);
   ```
+
+## dynamic_cast , static_cast
+
+- dynamic_cast
+  - used for handling polymorphism (inheritance hierarchy)
+  - used for casting from base class to derived class
+  - convert object pointer or object reference
+  - invokes run-time check (only cast relies on run-time checking)
+- static_cast
+  - used for normal/ordinary type conversion
+  - more strict than the C-style conversion
+    - e.g.
+    ```
+    char c = 'c'; // 1 bype
+    int *p = (int*)(&c); // C-style convertor, will cause run-time error because 4-byte point to 1-byte memory
+    ```
+  - static_cast will check the type compitibility than C-style conversion
+    ```
+    int *p = static_cast<int*>(c);	// compile-time error
+    ```
+
+## TODO: dynamic_pointer_cast, static_pointer_cast, const_pointer_cast
+
+
+
 
 ## rvalue , move, std::forward
 
