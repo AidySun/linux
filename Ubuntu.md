@@ -53,7 +53,9 @@ ps aux | grep ssh
 sudo iptables -A INPUT -p tcp --dport 2222 -j ACCEPT
 ```
 
+## Shell / Terminal
 
+- margin setting for Ubuntu terminal : https://askubuntu.com/questions/115762/increase-padding-in-gnome-terminal
 
 
 
