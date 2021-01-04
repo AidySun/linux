@@ -49,6 +49,7 @@
     - [System info](#system-info)
         - [show archtecture info](#show-archtecture-info)
     - [Linux Startup](#linux-startup)
+    - [Profile / Bashrc](#profile--bashrc)
 
 <!-- /MarkdownTOC -->
 
@@ -624,4 +625,47 @@ cat /proc/cpuinfo
   hexdump -C mbr.bin`
   // end of 512 bytes is `55 aa` means the device is bootable
   ```
+
+## Profile / Bashrc
+
+- for all users: `/etc/profile` , `/etc/bashrc`
+- `~/.bash_profile`, `~/.bashrc`
+- `/etc/profile.d/` folder contains config files for diff version/type of shell
+
+- login shell v.s. nologin shell
+  - login shell : `su - xxx` , 4 files of profile and bashrc are all executed
+    ```
+    # order
+    /etc/profile
+    .bash_profile
+    .bashrc
+    /etc/bashrc.  # included by .bashrc
+    ```
+  - no-login shell: `sh xxx` , 2 files `/etc/bashrc` and `~/.bashrc` are executed
+    ```
+    # order
+    .bashrc
+    /etc/bashrc
+    ```
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
