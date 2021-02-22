@@ -132,6 +132,38 @@ alias manzh="man -L zh_CN.utf8 "
 
 * it has more detail info than `help`.
 
+### $@ v.s. $*
+
+https://stackoverflow.com/a/12316565
+- prefer "%@" for common cases. Also double quotes with variable ("$word").
+```
+$ set -- "arg  1" "arg  2" "arg  3"
+
+$ for word in $*; do echo "$word"; done
+arg
+1
+arg
+2
+arg
+3
+
+$ for word in $@; do echo "$word"; done
+arg
+1
+arg
+2
+arg
+3
+
+$ for word in "$*"; do echo "$word"; done
+arg  1 arg  2 arg  3
+
+$ for word in "$@"; do echo "$word"; done
+arg  1
+arg  2
+arg  3
+```
+
 ### cp, tail, tar, gzip
 * cp
 ```
