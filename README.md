@@ -2,54 +2,57 @@
 <!-- MarkdownTOC autolink=true levels="1,2,3" -->
 
 - [linux](#linux)
-        - [check OS release version](#check-os-release-version)
-        - [vim color scheme](#vim-color-scheme)
-        - [crontab - scheduled task](#crontab---scheduled-task)
-    - [Commands](#commands)
-        - [`help`, `man`, `info`](#help-man-info)
-        - [cp, tail, tar, gzip](#cp-tail-tar-gzip)
-        - [screen](#screen)
-        - [ps pstree top \(process management\)](#ps-pstree-top-process-management)
-        - [nice renice job](#nice-renice-job)
-        - [kill](#kill)
-        - [nohup deamon](#nohup-deamon)
-        - [systemctl / service](#systemctl--service)
-    - [logs /var/log](#logs-varlog)
-    - [User & Group](#user--group)
-        - [User](#user)
-        - [Group](#group)
-        - [su, sudo](#su-sudo)
-        - [chmod, chown, SUID](#chmod-chown-suid)
-    - [Network Configuration](#network-configuration)
-        - [net-tools](#net-tools)
-        - [iproute2](#iproute2)
-    - [network trouble shooting](#network-trouble-shooting)
-        - [ping](#ping)
-        - [traceroute](#traceroute)
-        - [mtr        - my traceroute, analysis data package](#mtr---my-traceroute-analysis-data-package)
-        - [nslookup   - domain](#nslookup---domain)
-        - [telnet     - host can access, but not service, check port](#telnet---host-can-access-but-not-service-check-port)
-        - [tcpdump    -  all tcp packages](#tcpdump---all-tcp-packages)
-        - [netstat    - service listen, port listening](#netstat---service-listen-port-listening)
-        - [ss](#ss)
-    - [Network Service Management](#network-service-management)
-    - [Liberay Management](#liberay-management)
-        - [rpm](#rpm)
-        - [deb](#deb)
-    - [Package Management](#package-management)
-        - [yum](#yum)
-        - [apt](#apt)
-        - [source code compile](#source-code-compile)
-    - [Kernel](#kernel)
-    - [memory / disk](#memory--disk)
-        - [memory](#memory)
-        - [disk](#disk)
-    - [SELinux](#selinux)
-    - [File System](#file-system)
-    - [System info](#system-info)
-        - [show archtecture info](#show-archtecture-info)
-    - [Linux Startup](#linux-startup)
-    - [Profile / Bashrc](#profile--bashrc)
+    - [check OS release version](#check-os-release-version)
+    - [vim color scheme](#vim-color-scheme)
+    - [crontab - scheduled task](#crontab---scheduled-task)
+  - [Commands/Shell](#commandsshell)
+    - [redirection](#redirection)
+    - [grep](#grep)
+    - [help, man, info](#help-man-info)
+    - [$@ v.s. $*](#%24-vs-%24)
+    - [cp, tail, tar, gzip](#cp-tail-tar-gzip)
+    - [screen](#screen)
+    - [ps pstree top \(process management\)](#ps-pstree-top-process-management)
+    - [nice renice job](#nice-renice-job)
+    - [kill](#kill)
+    - [nohup deamon](#nohup-deamon)
+    - [systemctl / service](#systemctl--service)
+  - [logs /var/log](#logs-varlog)
+  - [User & Group](#user--group)
+    - [User](#user)
+    - [Group](#group)
+    - [su, sudo](#su-sudo)
+    - [chmod, chown, SUID](#chmod-chown-suid)
+  - [Network Configuration](#network-configuration)
+    - [net-tools](#net-tools)
+    - [iproute2](#iproute2)
+  - [network trouble shooting](#network-trouble-shooting)
+    - [ping](#ping)
+    - [traceroute](#traceroute)
+    - [mtr        - my traceroute, analysis data package](#mtr---my-traceroute-analysis-data-package)
+    - [nslookup   - domain](#nslookup---domain)
+    - [telnet     - host can access, but not service, check port](#telnet---host-can-access-but-not-service-check-port)
+    - [tcpdump    -  all tcp packages](#tcpdump---all-tcp-packages)
+    - [netstat    - service listen, port listening](#netstat---service-listen-port-listening)
+    - [ss](#ss)
+  - [Network Service Management](#network-service-management)
+  - [Liberay Management](#liberay-management)
+    - [rpm](#rpm)
+    - [deb](#deb)
+  - [Package Management](#package-management)
+    - [yum](#yum)
+    - [apt](#apt)
+    - [source code compile](#source-code-compile)
+  - [Kernel](#kernel)
+  - [memory / disk](#memory--disk)
+    - [memory](#memory)
+    - [disk](#disk)
+  - [SELinux](#selinux)
+  - [File System](#file-system)
+  - [System info](#system-info)
+    - [show archtecture info](#show-archtecture-info)
+  - [Linux Startup](#linux-startup)
+  - [Profile / Bashrc](#profile--bashrc)
 
 <!-- /MarkdownTOC -->
 
@@ -90,9 +93,39 @@ crontab -e
 
 [An example of setting up a process monitor and alert on a local system](https://www.redhat.com/sysadmin/linux-monitoring-and-alerting)
 
-## Commands
+## Commands/Shell
 
-### `help`, `man`, `info`
+- path of the sh file 
+```
+MY_PATH=`dirname $0`
+```
+
+- environment variable of a process : 
+```
+$ cat /proc/28818/environ | tr '\0' '\n'
+```
+
+### redirection
+
+```
+./a.sh >> /dev/null 2>&1 
+```
+
+### grep
+
+- grep with file extension
+```
+grep -r --include=\*.txt 'searchterm' ./
+```
+- grep with depth, together with `find`
+```
+find . -maxdepth 2 [-type f "*.txt"] -exec grep what_to_find {} \;
+grep what_to_find `find . -maxdepth 2 -type f`
+```
+
+
+
+### help, man, info
 
 #### man
 
