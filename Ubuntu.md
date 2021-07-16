@@ -8,6 +8,18 @@
   - [Shell / Terminal](#shell--terminal)
   - [Ubuntu coredump apport](#ubuntu-coredump-apport)
 
+## install CA root
+- ref: https://askubuntu.com/questions/73287/how-do-i-install-a-root-certificate
+```
+cp root.crt /usr/local/shared/ca-certificates/extra/
+sudo dpkg-reconfigure ca-certificates
+sudo update-ca-certificates
+
+# convert PEM to CRT
+openssl x509 -in root.pem -inform PEM -out root.crt
+```
+>>>>>>> 33d66c9 (install certificate on Ubuntu)
+
 ## apt
 
 Prefer `apt` than `apt-get`.
