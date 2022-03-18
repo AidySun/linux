@@ -1,5 +1,13 @@
 # Ubuntu
 
+- [Ubuntu](#ubuntu)
+  - [apt](#apt)
+  - [software / package install](#software--package-install)
+  - [chinese input](#chinese-input)
+  - [ssh server setup](#ssh-server-setup)
+  - [Shell / Terminal](#shell--terminal)
+  - [Ubuntu coredump apport](#ubuntu-coredump-apport)
+
 ## apt
 
 Prefer `apt` than `apt-get`.
@@ -58,6 +66,33 @@ sudo iptables -A INPUT -p tcp --dport 2222 -j ACCEPT
 - margin setting for Ubuntu terminal : https://askubuntu.com/questions/115762/increase-padding-in-gnome-terminal
 
 
+
+## Ubuntu coredump apport 
+
+- https://wiki.ubuntu.com/Apport
+- How to enable apport
+  - comment out following line in `/etc/apport/crashdb.conf`
+    ```
+    'problem_types': ['Bug', 'Package'],
+    ```
+- Core dump location, VM Ubuntu 20
+  - it's in `/var/lib/apport/coredump`
+  - it's not in `/var/crash` 
+  - according to the documentation, after `apport` is enabled, system will generage core dump even `ulimit -c` is 0
+    - check limit of running proc : `cat /proc/<pid>/limit`
+- More
+  ```
+  cat /var/log/apport.log
+  sysctl -w kernel.core_pattern
+  ```
+- run with core dump
+  ```
+  gdb ./myProgram -c <coredump>
+  (gdb) bt
+  (gdb) bt full
+  (gdb) info locals
+  (gdb) where
+  ```
 
 
 
