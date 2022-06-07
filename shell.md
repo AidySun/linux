@@ -1,4 +1,5 @@
 - [Shell](#shell)
+  - [date](#date)
   - [path](#path)
   - [redirection](#redirection)
   - [grep](#grep)
@@ -20,6 +21,21 @@
 - [if](#if)
 
 # Shell
+
+## date
+```
+START_TIME=$(date -u +%s)
+END_TIME=$(date -u +%s)
+DURATION=$(echo "$END_TIME - $START_TIME" | bc)
+PLATFORM=linux
+if [ "${PLATFORM}" == "osx" ]; then
+    echo "duration: $(date -u -r ${DURATION} +"%T")"
+else
+    echo "duration: $(date -u -d @${DURATION} +"%T")"
+fi
+```
+- `+%c` : format as local time
+- `-d @606 +"%T"` : convert seconds since epoch to a date, prefix `@` is required
 
 ## path
 - path of the sh file 
