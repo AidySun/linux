@@ -161,8 +161,9 @@ arg  3
 ## cp, tail, tar, gzip
 * cp
 ```
-cp -a
-cp -p
+cp -a // archive, same as -dR --preserve=all
+cp -p // --preserve=mode,ownership,timestamps
+cp -P // no-dereference to symble links, keep soft link
 ```
 
 * `tail -f` tracking the file change
