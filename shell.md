@@ -3,11 +3,9 @@
   - [path](#path)
   - [redirection](#redirection)
   - [grep](#grep)
+  - [locate, which, whereis, find](#locate-which-whereis-find)
+  - [gzip, bzip2, tar](#gzip-bzip2-tar)
   - [help, man, info](#help-man-info)
-      - [man](#man)
-        - [zh_CN manpages](#zh_cn-manpages)
-      - [help](#help)
-      - [info](#info)
   - [Parameters:](#parameters)
     - [$@ v.s. $*](#-vs-)
   - [cp, tail, tar, gzip](#cp-tail-tar-gzip)
@@ -69,6 +67,7 @@ DIR_BUILD=$(pwd)
 ```
 ./a.sh >> /dev/null 2>&1 
 ```
+- `0, 1, 2` mapping to `stdout, stdin, stderr`
 
 ## grep
 
@@ -82,7 +81,27 @@ find . -maxdepth 2 [-type f "*.txt"] -exec grep what_to_find {} \;
 grep what_to_find `find . -maxdepth 2 -type f`
 ```
 
+## locate, which, whereis, find
+- https://www.madebygps.com/an-intro-to-finding-things-in-linux/
+- `locate [keyword]`: search entire filesystem and locate every occurrence of keyword. It uses a database that is usually updated every one day.
+  - use command `updatedb` to update the locate db manually.
+- `whereis [binary]`: returns binaries location, its source and man page if available.
+- `which [binary]`: search binary location from `PATH` variable
 
+## gzip, bzip2, tar
+
+- `gzip file`: compress and replace the original file 
+  - `gunzip file`
+  - `zcat file.gz` or `gunzip -c xxx.gz` to cat the content in file.gz
+- `bzip2 file` is similar to `gzip` with a diff algorithm
+- `tar`: archive multiple files into a one large file
+  ```
+  c - create
+  x - exact
+  r - append file to a tar
+  t - list file in a tar
+  ```
+  - `tar xf a.tar --wildcards 'src/ProjectB/*'` : only exact files matches wildcards
 
 ## help, man, info
 
