@@ -207,26 +207,30 @@ screen -ls
 screen -S myscreen
 screen -d -r <screen>   # retach
 ```
-* shortcuts for 'C-a'
-```
-c     # create new windows
-C-a   # quich switch with most recent window
-0-9
-"     # list all selectable screens in current window
-i     # show info of current window 
-d     # detach
-?     # help
-A     # set title
-k     # kill
-```
+
+- shortcuts for 'C-a'
+  ```
+  c     # create new windows
+  C-a   # quich switch with most recent window
+  0-9
+  "     # list all selectable screens in current window
+  i     # show info of current window 
+  d     # detach
+  ?     # help
+  A     # set title
+  k     # kill
+  ```
 
 ## ps pstree top (process management)
-```
-ps -ef
-ps -eLf           # L - LWP (light weight process) thread
-ps -aux
-```
-* top
+
+- `ps`
+  ```
+  ps -ef
+  ps -eLf   # L - LWP (light weight process) thread
+  ps aux    # a: all user's process, u: current user, x: not attached to terminal
+  ```
+
+- `top`
   * load avg: 1min 5min 15min
   * `s` - set refresh second
   * `o` - set order
