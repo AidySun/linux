@@ -1,4 +1,28 @@
-# CMake-Make-Ninja
+# Compiler & Generator
+
+## Compiler
+
+- Ref: https://zhuanlan.zhihu.com/p/357803433
+
+- Compiling system has 3 main parties:
+  - Front end: Words/grammar analysis, code->Abstract Syntax Tree
+  - Optimizer: 
+  - Back end: ->byte code/machine code, IR->ARM
+
+### GCC, LLVM, CLang
+- LLVM (by Chris Lattner from Apple) can be used as Back end
+  - LLVM-GCC: GCC is front end
+  - LLVM-Clang: CLang is front end 
+
+- Clang is front end of LLVM
+
+### GDB
+
+- GNU debugger
+  - if compiler supports DWARF format, then it can use GDB to debug
+
+
+## CMake/Ninja
 
 - 如何评价 CMake？ https://www.zhihu.com/question/276415476/answer/557715322
 
