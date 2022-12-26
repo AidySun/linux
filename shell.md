@@ -1,24 +1,39 @@
-- [Shell](#shell)
-  - [date](#date)
-  - [path](#path)
-  - [redirection](#redirection)
-  - [grep](#grep)
-  - [locate, which, whereis, find](#locate-which-whereis-find)
-  - [gzip, bzip2, tar](#gzip-bzip2-tar)
-  - [help, man, info](#help-man-info)
-  - [Parameters:](#parameters)
-    - [$@ v.s. $*](#-vs-)
-  - [cp, tail, tar, gzip](#cp-tail-tar-gzip)
-  - [screen](#screen)
-  - [ps pstree top (process management)](#ps-pstree-top-process-management)
-  - [nice renice job](#nice-renice-job)
-  - [kill](#kill)
-  - [nohup deamon](#nohup-deamon)
-  - [systemctl / service](#systemctl--service)
-  - [command](#command)
-- [if](#if)
+1. [space in file name/path - IFS](#space-in-file-namepath---ifs)
+2. [date](#date)
+3. [path](#path)
+4. [redirection](#redirection)
+5. [grep](#grep)
+6. [locate, which, whereis, find](#locate-which-whereis-find)
+7. [gzip, bzip2, tar](#gzip-bzip2-tar)
+8. [help, man, info](#help-man-info)
+      1. [man](#man)
+         1. [zh\_CN manpages](#zh_cn-manpages)
+      2. [help](#help)
+      3. [info](#info)
+9. [Parameters:](#parameters)
+   1. [$@ v.s. $\*](#-vs-)
+10. [cp, tail, tar, gzip](#cp-tail-tar-gzip)
+11. [screen](#screen)
+12. [ps pstree top (process management)](#ps-pstree-top-process-management)
+13. [nice renice job](#nice-renice-job)
+14. [kill](#kill)
+15. [nohup deamon](#nohup-deamon)
+16. [systemctl / service](#systemctl--service)
+17. [command](#command)
 
 # Shell
+
+## space in file name/path - IFS
+
+```
+IFS=$'\n'
+for f in `ls *.txt` do
+  echo "$f"
+  # file "a b" will be treated as two files by default
+  # reason: space and tab will be treated as separator by default
+  # solution: set IFS=$'\n'
+done
+```
 
 ## date
 ```
