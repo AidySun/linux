@@ -1,12 +1,12 @@
 # Ubuntu
 
-- [Ubuntu](#ubuntu)
-  - [apt](#apt)
-  - [software / package install](#software--package-install)
-  - [chinese input](#chinese-input)
-  - [ssh server setup](#ssh-server-setup)
-  - [Shell / Terminal](#shell--terminal)
-  - [Ubuntu coredump apport](#ubuntu-coredump-apport)
+1. [install CA root](#install-ca-root)
+2. [apt](#apt)
+3. [software / package install](#software--package-install)
+4. [chinese input](#chinese-input)
+5. [ssh server setup](#ssh-server-setup)
+6. [Shell / Terminal](#shell--terminal)
+7. [Ubuntu coredump apport](#ubuntu-coredump-apport)
 
 ## install CA root
 - ref: https://askubuntu.com/questions/73287/how-do-i-install-a-root-certificate
@@ -18,7 +18,6 @@ sudo update-ca-certificates
 # convert PEM to CRT
 openssl x509 -in root.pem -inform PEM -out root.crt
 ```
->>>>>>> 33d66c9 (install certificate on Ubuntu)
 
 ## apt
 
