@@ -1,49 +1,46 @@
 
 <!-- MarkdownTOC autolink=true levels="1,2,3" -->
 
-- [linux](#linux)
-    - [check OS release version](#check-os-release-version)
-    - [vim color scheme](#vim-color-scheme)
-    - [crontab - scheduled task](#crontab---scheduled-task)
-  - [logs /var/log](#logs-varlog)
-  - [User & Group](#user--group)
-    - [User](#user)
-    - [Group](#group)
-    - [su, sudo](#su-sudo)
-    - [chmod, chown, SUID](#chmod-chown-suid)
-  - [Network Configuration](#network-configuration)
-    - [net-tools](#net-tools)
-      - [ifconfig](#ifconfig)
-      - [mii-tool](#mii-tool)
-      - [route](#route)
-    - [iproute2](#iproute2)
-  - [network trouble shooting](#network-trouble-shooting)
-    - [ping](#ping)
-    - [traceroute](#traceroute)
-    - [mtr        - my traceroute, analysis data package](#mtr----------my-traceroute-analysis-data-package)
-    - [nslookup   - domain](#nslookup-----domain)
-    - [telnet     - host can access, but not service, check port](#telnet-------host-can-access-but-not-service-check-port)
-    - [tcpdump    -  all tcp packages](#tcpdump-------all-tcp-packages)
-    - [netstat    - service listen, port listening](#netstat------service-listen-port-listening)
-    - [ss](#ss)
-  - [Network Service Management](#network-service-management)
-  - [Liberay Management](#liberay-management)
-    - [rpm](#rpm)
-    - [deb](#deb)
-  - [Package Management](#package-management)
-    - [yum](#yum)
-    - [apt](#apt)
-    - [source code compile](#source-code-compile)
-  - [Kernel](#kernel)
-  - [memory / disk](#memory--disk)
-    - [memory](#memory)
-    - [disk](#disk)
-  - [SELinux](#selinux)
-  - [File System](#file-system)
-  - [System info](#system-info)
-    - [show archtecture info](#show-archtecture-info)
-  - [Linux Startup](#linux-startup)
-  - [Profile / Bashrc](#profile--bashrc)
+1. [logs /var/log](#logs-varlog)
+2. [User \& Group](#user--group)
+   1. [User](#user)
+   2. [Group](#group)
+   3. [su, sudo](#su-sudo)
+   4. [chmod, chown, SUID](#chmod-chown-suid)
+3. [Network Configuration](#network-configuration)
+   1. [net-tools](#net-tools)
+      1. [ifconfig](#ifconfig)
+      2. [mii-tool](#mii-tool)
+      3. [route](#route)
+   2. [iproute2](#iproute2)
+4. [network trouble shooting](#network-trouble-shooting)
+   1. [ping](#ping)
+   2. [traceroute](#traceroute)
+   3. [mtr        - my traceroute, analysis data package](#mtr----------my-traceroute-analysis-data-package)
+   4. [nslookup   - domain](#nslookup-----domain)
+   5. [telnet     - host can access, but not service, check port](#telnet-------host-can-access-but-not-service-check-port)
+   6. [tcpdump    -  all tcp packages](#tcpdump-------all-tcp-packages)
+   7. [netstat    - service listen, port listening](#netstat------service-listen-port-listening)
+   8. [ss](#ss)
+5. [Network Service Management](#network-service-management)
+6. [Liberay Management](#liberay-management)
+   1. [rpm](#rpm)
+   2. [deb](#deb)
+7. [Package Management](#package-management)
+   1. [yum](#yum)
+   2. [apt](#apt)
+   3. [source code compile](#source-code-compile)
+8. [Kernel](#kernel)
+9. [memory / disk](#memory--disk)
+   1. [memory](#memory)
+   2. [disk](#disk)
+10. [SELinux](#selinux)
+11. [File System](#file-system)
+12. [System info](#system-info)
+    1. [show archtecture info](#show-archtecture-info)
+13. [Linux Startup](#linux-startup)
+14. [Profile / Bashrc](#profile--bashrc)
+15. [Shared libraries](#shared-libraries)
 
 <!-- /MarkdownTOC -->
 
@@ -483,8 +480,14 @@ cat /proc/cpuinfo
     /etc/bashrc
     ```
     
+## Shared libraries
 
-
+- ref: https://tldp.org/HOWTO/Program-Library-HOWTO/shared-libraries.html#AEN80
+- `ldd`: show shared libraries of a program
+- `ldconfig`
+- `gcc -fPIC xxx.cpp` 
+  - `PIC` : position independent code
+- `LD_LIBRARY_PATH`: an environment variable set to give the runtime shared library loader (`ld.so`) an extra set of dir to look for when searching for shared libraries.
 
 
 
