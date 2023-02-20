@@ -10,8 +10,8 @@ int main(int argc, char *argv[]) {
         int r;
 
         const char *servicePath=":1.1599";
-        const char *objectPath="/com/daimler/navigation/myipc"; //"/Models/Navigation/MyIPC/MyIPC";
-        const char *interface="/com/daimler/navigation/myipc"; ///Models/Navigation/MyIPC/MyIPC";
+        const char *objectPath="/com/aidy/navigation/myipc"; //"/Models/Navigation/MyIPC/MyIPC";
+        const char *interface="/com/aidy/navigation/myipc"; ///Models/Navigation/MyIPC/MyIPC";
         const char *method="funcWithoutReturnVal";
 
         /* Connect to the system bus */
