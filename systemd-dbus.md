@@ -1,18 +1,22 @@
-# systemctl / systemd
+# systemctl / systemd / dbus
 
-1. [.service file](#service-file)
-   1. [`[Unit]`](#unit)
-   2. [`[Service]`](#service)
-   3. [`[Install]`](#install)
+1. [systemctl / systemd](#systemctl--systemd)
+   1. [.service file](#service-file)
+      1. [`[Unit]`](#unit)
+      2. [`[Service]`](#service)
+      3. [`[Install]`](#install)
+2. [dbus](#dbus)
+   1. [`busctl`](#busctl)
 
 
 
 - Ref: https://ruanyifeng.com/blog/2016/03/systemd-tutorial-part-two.html
 
 
-## .service file
+## systemctl / systemd
+### .service file
 
-### `[Unit]`
+#### `[Unit]`
 
 Define dependencies and startup order.
 
@@ -21,7 +25,7 @@ Define dependencies and startup order.
   - they don't define startup order, by default, the app and its dependency startup at the same time.
 
 
-### `[Service]`
+#### `[Service]`
 
 Defines startup behavior.
 
@@ -69,7 +73,7 @@ Defines startup behavior.
 - `RestartSec`: seconds to wait before restarting the service
 
 
-### `[Install]`
+#### `[Install]`
 
 - `WantedBy`: target of which this service belongs to
   - multi-user.target
@@ -89,7 +93,28 @@ Defines startup behavior.
 
 
 
+## dbus
 
+- ref: http://0pointer.net/blog/the-new-sd-bus-api-of-systemd.html
+
+### `busctl`
+
+```shell
+busctl
+busctl tree org.freedesktop.dbus
+
+# show interfaces/methods/properties/signals
+busctl introspect <service> <object path>
+
+# call a method
+busctl call org.freedesktop.login1 /org/freedesktop/login1/session/_31 org.freedesktop.login1.Session Lock
+busctl call <service> <object> <interace> <method> <signature> <par1> ...
+busctl get-property ...
+
+# capture iteractions
+busctl --user capture <service> >> output.cap
+wireshark outpu.cap
+```
 
 
 
