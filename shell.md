@@ -1,28 +1,45 @@
-1. [space in file name/path - IFS](#space-in-file-namepath---ifs)
-2. [date](#date)
-3. [path](#path)
-4. [redirection](#redirection)
-5. [grep](#grep)
-6. [locate, which, whereis, find](#locate-which-whereis-find)
-7. [gzip, bzip2, tar](#gzip-bzip2-tar)
-8. [help, man, info](#help-man-info)
+1. [parameters](#parameters)
+2. [space in file name/path - IFS](#space-in-file-namepath---ifs)
+3. [date](#date)
+4. [path](#path)
+5. [redirection](#redirection)
+6. [grep](#grep)
+7. [locate, which, whereis, find](#locate-which-whereis-find)
+8. [gzip, bzip2, tar](#gzip-bzip2-tar)
+9. [help, man, info](#help-man-info)
       1. [man](#man)
          1. [zh\_CN manpages](#zh_cn-manpages)
       2. [help](#help)
       3. [info](#info)
-9. [Parameters](#parameters)
-   1. [$@ v.s. $\*](#-vs-)
-10. [cp, tail, tar, gzip](#cp-tail-tar-gzip)
-11. [screen](#screen)
-12. [ps pstree top (process management)](#ps-pstree-top-process-management)
+10. [Parameters](#parameters-1)
+    1. [$@ v.s. $\*](#-vs-)
+11. [cp, tail, tar, gzip](#cp-tail-tar-gzip)
+12. [screen](#screen)
+13. [ps pstree top (process management)](#ps-pstree-top-process-management)
     1. [lsof](#lsof)
-13. [nice renice job](#nice-renice-job)
-14. [kill](#kill)
-15. [nohup deamon](#nohup-deamon)
-16. [systemctl / service](#systemctl--service)
-17. [command](#command)
+14. [nice renice job](#nice-renice-job)
+15. [kill](#kill)
+16. [nohup deamon](#nohup-deamon)
+17. [systemctl / service](#systemctl--service)
+18. [command](#command)
 
 # Shell
+
+
+## parameters
+
+- parameters in shell funtion:
+
+```shell
+    $1 ~ $9 - positional parameter
+    $$ - current process id 
+    $# - parameter number
+    $0 - the current shell
+    $? - exit code of last command
+    $* $@ - the same, all parameters
+    "$*" - "$1c$2c$3", c is the first char in IFS
+    "$@" - "$1" "$2" "$3", is normal use
+```
 
 ## space in file name/path - IFS
 

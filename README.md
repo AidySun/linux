@@ -1,5 +1,4 @@
-
-<!-- MarkdownTOC autolink=true levels="1,2,3" -->
+# linux
 
 1. [check OS release version](#check-os-release-version)
 2. [vim color scheme](#vim-color-scheme)
@@ -45,9 +44,6 @@
 17. [Profile / Bashrc](#profile--bashrc)
 18. [Shared libraries](#shared-libraries)
 
-<!-- /MarkdownTOC -->
-
-# linux
 
 ## check OS release version
 
@@ -287,6 +283,7 @@ tcpdump -r baidu.cap http
 ### netstat    - service listen, port listening
 
 ```
+netstat --protocol unix
 netstat -ntpl 
 ```
 

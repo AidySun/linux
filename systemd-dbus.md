@@ -20,10 +20,17 @@
 
 Define dependencies and startup order.
 
-- `Before` `After` defines the startup order, not dependency relationship
-- `Wants` `Requires` define dependency. `Wants` is weak, `Requires` is strong
+- `Before` `After` defines the **startup order**, not dependency relationship
+- `Wants` `Requires` define **dependency**. `Wants` is weak, `Requires` is strong
   - they don't define startup order, by default, the app and its dependency startup at the same time.
 
+```
+# self should startup **after** network.terget it it's startup
+After=network.target
+
+# 
+Wants=sshd-keygen.service
+```
 
 #### `[Service]`
 
